@@ -13,6 +13,7 @@ import org.nearbyshops.Model.ModelRoles.StaffPermissions;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Utility.Globals;
 import org.nearbyshops.Utility.UserAuthentication;
+import org.nearbyshops.Utility.UtilityMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
 import static org.nearbyshops.Utility.UserAuthentication.AUTHENTICATION_SCHEME;
 
@@ -59,6 +61,9 @@ public class UserLoginRESTEndpoint {
 
     @Autowired
     private DAOUserUtility daoUserUtility;
+
+
+    Logger logger  = Logger.getLogger(UserLoginRESTEndpoint.class.getName());
 
 
 

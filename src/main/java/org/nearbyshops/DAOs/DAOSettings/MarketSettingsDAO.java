@@ -130,6 +130,9 @@ public class MarketSettingsDAO {
 
 			rowIdOfInsertedRow = statement.executeUpdate();
 
+			// invalidate the settings
+			this.marketSettings= null;
+
 			ResultSet rs = statement.getGeneratedKeys();
 
 			if(rs.next())
@@ -511,7 +514,7 @@ public class MarketSettingsDAO {
 		settings.setSenderIDForSMS("ABCDEF");
 		settings.setServiceNameForSMS("Nearby Shops");
 		settings.setDefaultCountryCode(91);
-		settings.setLoginUsingOTPEnabled(true);
+		settings.setLoginUsingOTPEnabled(false);
 		settings.setMarketFeePickupFromShop(5);
 		settings.setMarketFeeHomeDelivery(5);
 		settings.setAddMarketFeeToBill(false);

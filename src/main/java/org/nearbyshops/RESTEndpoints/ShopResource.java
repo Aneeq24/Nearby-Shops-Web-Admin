@@ -1164,7 +1164,8 @@ public class ShopResource {
 
 
 	@GetMapping ("/Image/{name}")
-	public ResponseEntity<Object> getImage(@PathVariable("name") String fileName, HttpServletResponse response) {
+	public ResponseEntity<Object> getImage(@PathVariable("name") String fileName,
+										   HttpServletResponse response) {
 
 
 
