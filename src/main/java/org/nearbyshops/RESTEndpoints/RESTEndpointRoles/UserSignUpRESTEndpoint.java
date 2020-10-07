@@ -148,7 +148,7 @@ public class UserSignUpRESTEndpoint {
 
                     // registration successful therefore send email to notify the user
                     Email email = EmailBuilder.startingBlank()
-                            .from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+                            .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
                             .to(user.getName(),user.getEmail())
                             .withSubject("Registration successful for your account")
                             .withHTMLText(message)
@@ -305,7 +305,7 @@ public class UserSignUpRESTEndpoint {
                 MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
 
                 Email emailComposed = EmailBuilder.startingBlank()
-                        .from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+                        .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
                         .to("user",email)
                         .withSubject("E-mail Verification Code")
                         .withHTMLText(htmlText)
@@ -334,7 +334,7 @@ public class UserSignUpRESTEndpoint {
 
 
             Email emailComposed = EmailBuilder.startingBlank()
-                    .from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+                    .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
                     .to("user",email)
                     .withSubject("E-mail Verification Code")
                     .withHTMLText(htmlText)

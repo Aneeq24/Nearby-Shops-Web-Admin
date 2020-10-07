@@ -66,7 +66,7 @@ public class ServiceConfigurationResource {
 
 
 	@GetMapping
-//	@CrossOrigin
+	@CrossOrigin
 	public ResponseEntity<Object> getService(@RequestParam(value = "latCenter",required = false)Double latCenter,
 									 @RequestParam(value = "lonCenter",required = false)Double lonCenter)
 	{
@@ -407,6 +407,7 @@ public class ServiceConfigurationResource {
 
 
 
+
 	private static final OkHttpClient client = new OkHttpClient();
 
 	public void updateSDSEntry(String sdsURL)
@@ -416,7 +417,7 @@ public class ServiceConfigurationResource {
 
 
 		String url = "";
-		url = sdsURL + "/api/v1/ServiceConfiguration/UpdateService?ServiceURL=" + appProperties.getDomain_name();
+		url = sdsURL + "/api/v1/Markets/UpdateService?ServiceURL=" + appProperties.getDomain_name();
 
 
 //        System.out.println("Ping URL" + url);

@@ -97,6 +97,8 @@
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 
+
+
 		<!-- Dependencies alternative to spring starter web -->
 
 <!--		<dependency>-->
@@ -109,7 +111,6 @@
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
-<!--			<scope>provided</scope>-->
 <!--		</dependency>-->
 
 <!--		<dependency>-->
@@ -152,11 +153,11 @@
 
 
 
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>jstl</groupId>-->
+<!--			<artifactId>jstl</artifactId>-->
+<!--			<version>1.2</version>-->
+<!--		</dependency>-->
 
 
 		<dependency>
@@ -169,10 +170,16 @@
 
 
 		<!--// ok http dependency-->
+<!--		<dependency>-->
+<!--			<groupId>com.squareup.okhttp3</groupId>-->
+<!--			<artifactId>okhttp</artifactId>-->
+<!--			<version>3.5.0</version>-->
+<!--		</dependency>-->
+
 		<dependency>
 			<groupId>com.squareup.okhttp3</groupId>
 			<artifactId>okhttp</artifactId>
-			<version>3.5.0</version>
+			<version>4.9.0</version>
 		</dependency>
 
 

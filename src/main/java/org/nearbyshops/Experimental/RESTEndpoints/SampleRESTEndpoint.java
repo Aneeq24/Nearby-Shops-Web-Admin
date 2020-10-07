@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 
-@RestController
-@RequestMapping("/InitialEndpoint")
+//@RestController
+//@RequestMapping("/InitialEndpoint")
 public class SampleRESTEndpoint {
 
     Logger logger = LoggerFactory.getLogger(SampleRESTEndpoint.class);

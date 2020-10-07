@@ -139,7 +139,7 @@ public class OrderResource {
 
 
 					Email emailComposed = EmailBuilder.startingBlank()
-							.from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+							.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
 							.to(shopAdminProfile.getName(),shopAdminProfile.getEmail())
 							.withSubject("You have received an Order with Order Number :  " + orderId + "")
 							.withHTMLText(htmlText)

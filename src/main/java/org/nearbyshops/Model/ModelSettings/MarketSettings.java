@@ -121,7 +121,7 @@ public class MarketSettings {
 //    String smtpPassword;
 
     String emailSenderName;
-    String emailAddressForSender;
+//    String emailAddressForSender;
 
     boolean codEnabled;
     boolean podEnabled;
@@ -209,13 +209,7 @@ public class MarketSettings {
         this.emailSenderName = emailSenderName;
     }
 
-    public String getEmailAddressForSender() {
-        return emailAddressForSender;
-    }
 
-    public void setEmailAddressForSender(String emailAddressForSender) {
-        this.emailAddressForSender = emailAddressForSender;
-    }
 
     public boolean isCodEnabled() {
         return codEnabled;

@@ -107,7 +107,12 @@ class AppInitialization implements InitializingBean {
 
         loadDefaultMarketConfiguration();
         loadDefaultMarketSettings();
+
+
+//        logger.info("App Properties : " + appProperties.toString());
     }
+
+
 
 
 
@@ -459,7 +464,7 @@ class AppInitialization implements InitializingBean {
 
 
         String url = "";
-        url = sdsURL + "/api/v1/ServiceConfiguration/Ping?ServiceURL=" + appProperties.getDomain_name();
+        url = sdsURL + "/api/v1/Markets/Ping?ServiceURL=" + appProperties.getDomain_name();
 
 
 //        System.out.println("Ping URL" + url);
@@ -494,5 +499,7 @@ class AppInitialization implements InitializingBean {
 
 
     }
+
+
 
 }

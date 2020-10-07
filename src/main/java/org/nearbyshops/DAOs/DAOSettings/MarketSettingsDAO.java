@@ -51,7 +51,7 @@ public class MarketSettingsDAO {
 //				+ MarketSettings.SMTP_PASSWORD + ","
 
 				+ MarketSettings.EMAIL_SENDER_NAME + ","
-				+ MarketSettings.EMAIL_ADDRESS_FOR_SENDER + ","
+//				+ MarketSettings.EMAIL_ADDRESS_FOR_SENDER + ","
 
 				+ MarketSettings.COD_ENABLED + ","
 				+ MarketSettings.POD_ENABLED + ","
@@ -96,7 +96,7 @@ public class MarketSettingsDAO {
 //			statement.setString(++i, market.getSmtpPassword());
 
 			statement.setString(++i, market.getEmailSenderName());
-			statement.setString(++i, market.getEmailAddressForSender());
+//			statement.setString(++i, market.getEmailAddressForSender());
 
 			statement.setBoolean(++i, market.isCodEnabled());
 			statement.setBoolean(++i, market.isPodEnabled());
@@ -188,7 +188,7 @@ public class MarketSettingsDAO {
 //				+ MarketSettings.SMTP_PASSWORD + " = ?,"
 
 				+ MarketSettings.EMAIL_SENDER_NAME + " = ?,"
-				+ MarketSettings.EMAIL_ADDRESS_FOR_SENDER + " = ?,"
+//				+ MarketSettings.EMAIL_ADDRESS_FOR_SENDER + " = ?,"
 
 				+ MarketSettings.COD_ENABLED + " = ?,"
 				+ MarketSettings.POD_ENABLED + " = ?,"
@@ -234,7 +234,7 @@ public class MarketSettingsDAO {
 //			statement.setString(++i, market.getSmtpPassword());
 
 			statement.setString(++i, market.getEmailSenderName());
-			statement.setString(++i, market.getEmailAddressForSender());
+//			statement.setString(++i, market.getEmailAddressForSender());
 
 			statement.setBoolean(++i, market.isCodEnabled());
 			statement.setBoolean(++i, market.isPodEnabled());
@@ -428,7 +428,7 @@ public class MarketSettingsDAO {
 //				market.setSmtpPassword(rs.getString(MarketSettings.SMTP_PASSWORD));
 
 				market.setEmailSenderName(rs.getString(MarketSettings.EMAIL_SENDER_NAME));
-				market.setEmailAddressForSender(rs.getString(MarketSettings.EMAIL_ADDRESS_FOR_SENDER));
+//				market.setEmailAddressForSender(rs.getString(MarketSettings.EMAIL_ADDRESS_FOR_SENDER));
 
 				market.setCodEnabled(rs.getBoolean(MarketSettings.COD_ENABLED));
 				market.setPodEnabled(rs.getBoolean(MarketSettings.POD_ENABLED));
@@ -506,7 +506,7 @@ public class MarketSettingsDAO {
 		MarketSettings settings = new MarketSettings();
 
 		settings.setSettingID(1);
-		settings.setEmailAddressForSender("abcde@example.org");
+//		settings.setEmailAddressForSender("abcde@example.org");
 		settings.setEmailSenderName("Example Sender");
 		settings.setCodEnabled(true);
 		settings.setPodEnabled(true);

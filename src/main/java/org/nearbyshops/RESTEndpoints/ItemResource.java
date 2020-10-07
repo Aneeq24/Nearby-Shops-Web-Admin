@@ -49,7 +49,6 @@ public class ItemResource {
 
 
 
-
 	@Autowired
 	private HttpServletRequest request;
 

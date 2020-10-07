@@ -306,7 +306,7 @@ public class OrderEndpointDeliveryGuySelf {
 				MarketSettings settings = marketSettingsDAO.getSettingsInstance();
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(settings.getEmailSenderName(),settings.getEmailAddressForSender())
+						.from(settings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Delivered")
 						.withHTMLText(htmlText)

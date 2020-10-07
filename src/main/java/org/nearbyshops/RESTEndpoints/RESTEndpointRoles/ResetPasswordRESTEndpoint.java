@@ -109,7 +109,7 @@ public class ResetPasswordRESTEndpoint {
 
 
     @PutMapping ("/GenerateResetCode")
-    ResponseEntity<Object> generateResetCode(User user)
+    ResponseEntity<Object> generateResetCode(@RequestBody User user)
     {
 
         int rowCount = 0;
@@ -159,7 +159,7 @@ public class ResetPasswordRESTEndpoint {
 
 
                     Email email = EmailBuilder.startingBlank()
-                            .from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+                            .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
                             .to(user.getName(),user.getEmail())
                             .withSubject("E-mail Verification Code")
                             .withHTMLText(message)
@@ -205,7 +205,7 @@ public class ResetPasswordRESTEndpoint {
 
 
                 Email email = EmailBuilder.startingBlank()
-                        .from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+                        .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
                         .to(user.getName(),user.getEmail())
                         .withSubject("E-mail Verification Code")
                         .withHTMLText(message)

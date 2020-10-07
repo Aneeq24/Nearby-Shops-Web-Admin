@@ -265,7 +265,7 @@ public class ShopResource {
 
 	@PutMapping ("/UpdateBySelf")
 	@RolesAllowed({Constants.ROLE_SHOP_ADMIN})
-	public ResponseEntity<Object> updateShopByOwner(Shop shop)
+	public ResponseEntity<Object> updateShopByOwner(@RequestBody Shop shop)
 	{
 
 		User userAuthenticated = userAuthentication.isUserAllowed(request, Arrays.asList(Constants.ROLE_SHOP_ADMIN));

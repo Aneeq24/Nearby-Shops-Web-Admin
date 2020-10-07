@@ -348,7 +348,7 @@ public class OrderEndpointShopStaff {
 				MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Delivered")
 						.withHTMLText(htmlText)
@@ -827,7 +827,7 @@ public class OrderEndpointShopStaff {
 				MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " Confirmed")
 						.withHTMLText(htmlText)
@@ -916,7 +916,7 @@ public class OrderEndpointShopStaff {
 
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " Packed")
 						.withHTMLText(htmlText)
@@ -1014,7 +1014,7 @@ public class OrderEndpointShopStaff {
 
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Ready for Pickup")
 						.withHTMLText(htmlText)
@@ -1111,7 +1111,7 @@ public class OrderEndpointShopStaff {
 
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),marketSettings.getEmailAddressForSender())
+						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Delivered")
 						.withHTMLText(htmlText)

@@ -48,7 +48,7 @@ public class ShopStaffLoginRESTEndpoint {
 
     @PutMapping ("/UpdateStaffLocation")
     @RolesAllowed({Constants.ROLE_SHOP_STAFF})
-    public ResponseEntity<Object> updateStaffLocation(ShopStaffPermissions permissions)
+    public ResponseEntity<Object> updateStaffLocation(@RequestBody ShopStaffPermissions permissions)
     {
 
         User userAuthenticated = userAuthentication.isUserAllowed(request,
@@ -127,7 +127,7 @@ public class ShopStaffLoginRESTEndpoint {
 
     @PutMapping("/UpdateStaffPermissions")
     @RolesAllowed({Constants.ROLE_SHOP_ADMIN})
-    public ResponseEntity<Object> updateStaffPermissions(ShopStaffPermissions permissions)
+    public ResponseEntity<Object> updateStaffPermissions(@RequestBody ShopStaffPermissions permissions)
     {
 
 
