@@ -32,6 +32,7 @@ public class AppProperties {
     String fcm_database_url;
 
     String msg91_apikey;
+    String sender_id_for_sms;
 
     String razorpay_key_id;
     String razorpay_key_secret;
@@ -50,31 +51,13 @@ public class AppProperties {
     // getter and Setter methods
 
 
-    @Override
-    public String toString() {
-        return "AppProperties{" +
-                "domain_name='" + domain_name + '\'' +
-                ", admin_email='" + admin_email + '\'' +
-                ", admin_password='" + admin_password + '\'' +
-                ", smtp_server_url='" + smtp_server_url + '\'' +
-                ", smtp_port=" + smtp_port +
-                ", smtp_username='" + smtp_username + '\'' +
-                ", smtp_password='" + smtp_password + '\'' +
-                ", market_id_for_fcm='" + market_id_for_fcm + '\'' +
-                ", fcm_configuration_file_path='" + fcm_configuration_file_path + '\'' +
-                ", fcm_database_url='" + fcm_database_url + '\'' +
-                ", msg91_apikey='" + msg91_apikey + '\'' +
-                ", razorpay_key_id='" + razorpay_key_id + '\'' +
-                ", razorpay_key_secret='" + razorpay_key_secret + '\'' +
-                ", trusted_market_aggregators=" + trusted_market_aggregators +
-                ", token_duration_minutes=" + token_duration_minutes +
-                ", email_verification_code_expiry_minutes=" + email_verification_code_expiry_minutes +
-                ", phone_otp_expiry_minutes=" + phone_otp_expiry_minutes +
-                ", password_reset_code_expiry_minutes=" + password_reset_code_expiry_minutes +
-                ", max_limit=" + max_limit +
-                '}';
+    public String getSender_id_for_sms() {
+        return sender_id_for_sms;
     }
 
+    public void setSender_id_for_sms(String sender_id_for_sms) {
+        this.sender_id_for_sms = sender_id_for_sms;
+    }
 
     public String getEmail_address_for_sender() {
         return email_address_for_sender;

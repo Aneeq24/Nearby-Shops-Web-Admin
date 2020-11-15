@@ -1494,8 +1494,6 @@ public class ItemCategoryDAO {
 
 
 
-
-
 	public ItemCategory getItemCatImageURL(
 			Integer itemCatID
 	) {
@@ -1569,9 +1567,6 @@ public class ItemCategoryDAO {
 
 		return itemCategory;
 	}
-
-
-
 
 
 

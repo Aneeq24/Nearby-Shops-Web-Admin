@@ -5,7 +5,9 @@ package org.nearbyshops.RESTEndpoints.RESTEndpointRoles;
 import org.nearbyshops.AppProperties;
 import org.nearbyshops.DAOs.DAORoles.DAOResetPassword;
 import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
+import org.nearbyshops.DAOs.DAOSettings.ServiceConfigurationDAO;
 import org.nearbyshops.Model.ModelRoles.User;
+import org.nearbyshops.Model.ModelSettings.Market;
 import org.nearbyshops.Model.ModelSettings.MarketSettings;
 import org.nearbyshops.Utility.SendEmail;
 import org.nearbyshops.Utility.SendSMS;
@@ -48,6 +50,13 @@ public class ResetPasswordRESTEndpoint {
 
     @Autowired
     MarketSettingsDAO marketSettingsDAO;
+
+
+
+    @Autowired
+    ServiceConfigurationDAO serviceConfigurationDAO;
+
+
 
 
 
@@ -156,10 +165,11 @@ public class ResetPasswordRESTEndpoint {
 
 
                     MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+                    Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 
                     Email email = EmailBuilder.startingBlank()
-                            .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+                            .from(market.getServiceName(),appProperties.getEmail_address_for_sender())
                             .to(user.getName(),user.getEmail())
                             .withSubject("E-mail Verification Code")
                             .withHTMLText(message)
@@ -202,10 +212,11 @@ public class ResetPasswordRESTEndpoint {
 
 
                 MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+                Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 
                 Email email = EmailBuilder.startingBlank()
-                        .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+                        .from(market.getServiceName(),appProperties.getEmail_address_for_sender())
                         .to(user.getName(),user.getEmail())
                         .withSubject("E-mail Verification Code")
                         .withHTMLText(message)

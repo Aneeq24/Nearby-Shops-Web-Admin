@@ -13,6 +13,8 @@ import org.nearbyshops.Model.ModelRoles.StaffPermissions;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Utility.Globals;
 import org.nearbyshops.Utility.UserAuthentication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,9 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Base64;
 import java.util.StringTokenizer;
+
+
+
 
 @RestController
 @RequestMapping ("/api/v1/User/LoginUsingOTP")
@@ -77,6 +82,10 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
+    Logger logger = LoggerFactory.getLogger(LoginUsingOTPRESTEndpoint.class);
+
+
+
 
 
     @GetMapping("/LoginUsingPhoneOTP")
@@ -104,8 +113,8 @@ public class LoginUsingOTPRESTEndpoint {
         final String phoneOTP = tokenizer.nextToken();
 
         //Verifying Username and password
-//        System.out.println(username);
-//        System.out.println(password);
+//        logger.info(username);
+//        logger.info(password);
 
 
 //            try {
@@ -138,7 +147,7 @@ public class LoginUsingOTPRESTEndpoint {
 
 
             // get profile information and send it to user
-            User userProfile = daoUser.getProfile(phone,generatedPassword);
+            User userProfile = daoUser.getProfileUsingToken(phone,generatedPassword);
             userProfile.setToken(generatedPassword);
             userProfile.setPhone(phone);
 
@@ -239,53 +248,50 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-        System.out.println("Log : " + emailOrPhone + " | " + emailOrPhoneOTP);
-        System.out.println("Log : Registration Mode - "  + registrationMode);
+        logger.info("Log : " + emailOrPhone + " | " + emailOrPhoneOTP);
+        logger.info("Log : Registration Mode - "  + registrationMode);
 
 
         if(isOTPValid)
         {
 
 
-            System.out.println("Log : OTP Valid");
-
-
-            String generatedToken = new BigInteger(130, Globals.random).toString(32);
+            logger.info("Log : OTP Valid");
 
 
             User user = new User();
-            user.setToken(generatedToken);
 
-            int rowsUpdated = 0;
+
+//            int rowsUpdated = 0;
 
 
 
             if(registrationMode==User.REGISTRATION_MODE_PHONE)
             {
                 user.setPhone(emailOrPhone);
-                rowsUpdated = daoLoginUsingOTPNew.upsertUserProfilePhone(user,true);
+                daoLoginUsingOTPNew.upsertUserProfilePhone(user,true);
             }
             else if(registrationMode==User.REGISTRATION_MODE_EMAIL) {
 
                 user.setEmail(emailOrPhone);
-                rowsUpdated = daoLoginUsingOTPNew.upsertUserProfileEmail(user,true);
+                daoLoginUsingOTPNew.upsertUserProfileEmail(user,true);
             }
 
 
 
 
-            System.out.println("Rows updated : " + rowsUpdated);
+//            logger.info("Rows updated : " + rowsUpdated);
 
 
 
+            User userProfile = daoUser.checkTokenAndGetProfile(emailOrPhone);
 
 
-            if(rowsUpdated==1)
+            if(userProfile!=null)
             {
 
                 // get profile information and send it to user
-                User userProfile = daoUser.getProfileUsingToken(emailOrPhone,generatedToken);
-                userProfile.setToken(generatedToken);
+//                userProfile.setToken(generatedToken);
 
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(userProfile);
@@ -297,11 +303,13 @@ public class LoginUsingOTPRESTEndpoint {
                         .build();
             }
 
+
+
         }
         else
         {
 
-            System.out.println("Log : OTP Not Valid");
+            logger.info("Log : OTP Not Valid");
 
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED)
                     .build();
@@ -343,7 +351,7 @@ public class LoginUsingOTPRESTEndpoint {
         for(String url : appProperties.getTrusted_market_aggregators())
         {
 
-//            System.out.println("URL SDS : " + url);
+//            logger.info("URL SDS : " + url);
 
             if(url.equals(serviceURLForSDS))
             {
@@ -373,8 +381,8 @@ public class LoginUsingOTPRESTEndpoint {
         final String password = tokenizer.nextToken();
 
         //Verifying Username and password
-//        System.out.println(username);
-//        System.out.println(password);
+//        logger.info(username);
+//        logger.info(password);
 
 
 //            try {
@@ -385,7 +393,7 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-//        System.out.println("Username : " + phone + " | Password : " + password);
+//        logger.info("Username : " + phone + " | Password : " + password);
 
 
 
@@ -430,11 +438,11 @@ public class LoginUsingOTPRESTEndpoint {
 
 //            Headers responseHeaders = response.headers();
 //            for (int i = 0; i < responseHeaders.size(); i++) {
-//                System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+//                logger.info(responseHeaders.name(i) + ": " + responseHeaders.value(i));
 //            }
 
 
-//            System.out.println("Response Code : " + response.code());
+//            logger.info("Response Code : " + response.code());
 
             if(response.code()!=200)
             {
@@ -445,7 +453,7 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-//            System.out.println(response.body().string());
+//            logger.info(response.body().string());
             userProfileGlobal = gson.fromJson(response.body().string(),User.class);
 
             generatedTokenGlobal = userProfileGlobal.getToken();
@@ -456,7 +464,7 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-        String generatedTokenLocal = new BigInteger(130, Globals.random).toString(32);
+//        String generatedTokenLocal = new BigInteger(130, Globals.random).toString(32);
 
 
 //        User user = new User();
@@ -465,7 +473,7 @@ public class LoginUsingOTPRESTEndpoint {
 
 
 
-        userProfileGlobal.setToken(generatedTokenLocal);
+//        userProfileGlobal.setToken(generatedTokenLocal);
 
 
 
@@ -485,27 +493,25 @@ public class LoginUsingOTPRESTEndpoint {
 
             // check if user account has existing associations
 
-            if(daoLoginUsingOTP.checkUserExistsUsingAssociations(userProfileGlobal.getUserID(),serviceURLForSDS)!=null)
-            {
-                // account exists
-                rowsUpdated = daoLoginUsingOTP.updateUserProfileAssociated(userProfileGlobal,serviceURLForSDS);
+//            if(daoLoginUsingOTP.checkUserExistsUsingAssociations(userProfileGlobal.getUserID(),serviceURLForSDS)!=null)
+//            {
+//                // account exists
+//                rowsUpdated = daoLoginUsingOTP.updateUserProfileAssociated(userProfileGlobal,serviceURLForSDS);
+//
+//            }
+//            else
+//            {
+//                // user account does not exist ... insert profile
+//                rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,serviceURLForSDS,true);
+//
+//            }
 
-            }
-            else
-            {
-                // user account does not exist ... insert profile
-                rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,serviceURLForSDS,true);
 
-            }
-
-
-
-//            rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,serviceURLForSDS,true);
-
+            rowsUpdated = daoLoginUsingOTP.insertUserProfile(userProfileGlobal,serviceURLForSDS,true);
         }
 
 
-        System.out.println("Row Count : " + rowsUpdated);
+        logger.info("Row Count : " + rowsUpdated);
 
 
 
@@ -517,8 +523,8 @@ public class LoginUsingOTPRESTEndpoint {
 
 
             // get profile information and send it to user
-            User userProfile = daoUser.getProfile(username, generatedTokenLocal);
-            userProfile.setToken(generatedTokenLocal);
+            User userProfile = daoUser.checkTokenAndGetProfile(username);
+//            userProfile.setToken(generatedTokenLocal);
 
 
 

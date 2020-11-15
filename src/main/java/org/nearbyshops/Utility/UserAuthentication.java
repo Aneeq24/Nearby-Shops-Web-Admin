@@ -70,7 +70,7 @@ public class UserAuthentication {
     private User isUserAllowed(final String username, final String password, List<String> rolesSet)
     {
 
-        User user = daoUserToken.verifyUser(username,password);
+        User user = daoUserToken.verifyUserSimpleToken(username,password);
 
 
         if(user == null)

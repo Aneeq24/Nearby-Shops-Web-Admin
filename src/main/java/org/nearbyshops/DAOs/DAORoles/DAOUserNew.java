@@ -4,10 +4,12 @@ package org.nearbyshops.DAOs.DAORoles;
 import org.nearbyshops.Constants;
 import org.nearbyshops.Model.ModelEndpoint.UserEndpoint;
 import org.nearbyshops.Model.ModelRoles.*;
+import org.nearbyshops.Utility.Globals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -769,10 +771,7 @@ public class DAOUserNew {
 
         String updateStatement = "UPDATE " + User.TABLE_NAME
 
-                + " SET "
-                + User.TOKEN + "=?,"
-                + User.TIMESTAMP_TOKEN_EXPIRES + "=?"
-
+                + " SET " + User.TOKEN + " = ? "
                 + " WHERE "
                 + " ( " + User.USERNAME + " = ? "
                 + " OR " +  User.USER_ID + " = ? "
@@ -787,24 +786,24 @@ public class DAOUserNew {
 
 
 
-
-        String insertToken = "";
-
-        insertToken = "INSERT INTO "
-                + UserTokens.TABLE_NAME
-                + "("
-                + UserTokens.LOCAL_USER_ID + ","
-                + UserTokens.TOKEN_STRING + ""
-                + ") SELECT "
-                + User.USER_ID + ","
-                + " ? " + ""
-                + " FROM "  + User.TABLE_NAME
-                + " WHERE "
-                + " ( " + User.USERNAME + " = ? "
-                + " OR " +  User.USER_ID + " = ? "
-                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
-                + " OR " + " ( " + User.PHONE + " = ?" + ")"
-                + ")";
+//
+//        String insertToken = "";
+//
+//        insertToken = "INSERT INTO "
+//                + UserTokens.TABLE_NAME
+//                + "("
+//                + UserTokens.LOCAL_USER_ID + ","
+//                + UserTokens.TOKEN_STRING + ""
+//                + ") SELECT "
+//                + User.USER_ID + ","
+//                + " ? " + ""
+//                + " FROM "  + User.TABLE_NAME
+//                + " WHERE "
+//                + " ( " + User.USERNAME + " = ? "
+//                + " OR " +  User.USER_ID + " = ? "
+//                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
+//                + " OR " + " ( " + User.PHONE + " = ?" + ")"
+//                + ")";
 
 
 
@@ -821,10 +820,16 @@ public class DAOUserNew {
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(updateStatement);
 
+
+
+            String generatedToken = new BigInteger(130, Globals.random).toString(32);
+            user.setToken(generatedToken);
+
+
             int i = 0;
 
             statement.setString(++i,user.getToken());
-            statement.setTimestamp(++i,user.getTimestampTokenExpires());
+//            statement.setTimestamp(++i,user.getTimestampTokenExpires());
 
 //            statement.setString(++i,username); // username
 //            statement.setString(++i,username); // userID
@@ -843,18 +848,18 @@ public class DAOUserNew {
 
 
 
-
-            statement = connection.prepareStatement(insertToken);
-
-            i = 0;
-
-            statement.setString(++i,user.getToken());
-            statement.setString(++i,user.getUsername());
-            statement.setObject(++i,user.getUserID());
-            statement.setString(++i,user.getEmail());
-            statement.setString(++i,user.getPhone());
-
-            statement.executeUpdate();
+//
+//            statement = connection.prepareStatement(insertToken);
+//
+//            i = 0;
+//
+//            statement.setString(++i,user.getToken());
+//            statement.setString(++i,user.getUsername());
+//            statement.setObject(++i,user.getUserID());
+//            statement.setString(++i,user.getEmail());
+//            statement.setString(++i,user.getPhone());
+//
+//            statement.executeUpdate();
 
 
 //            System.out.println("Total rows updated: " + rowCountUpdated);
@@ -891,103 +896,106 @@ public class DAOUserNew {
     }
 
 
-
-
-    public User verifyUser(String username, String token)
+    public int updateToken(String username)
     {
 
-        String queryToken = "SELECT "
 
-                + User.USER_ID + ","
-                + User.USERNAME + ","
-                + User.ROLE + ""
+        String updateStatement = "UPDATE " + User.TABLE_NAME
 
-                + " FROM " + User.TABLE_NAME
+                + " SET " + User.TOKEN + " = ? "
                 + " WHERE "
                 + " ( " + User.USERNAME + " = ? "
-                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
+                + " OR " + " CAST ( " +  User.USER_ID + " AS text )  = ? "
                 + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
-                + " OR " + " ( " + User.PHONE + " = ?" + ")" + ")"
-                + " AND " + User.TOKEN + " = ? ";
+                + " OR " + " ( " + User.PHONE + " = ?" + ")"
+                + ")";
 
-//        + " AND " + User.TIMESTAMP_TOKEN_EXPIRES + " > now()"
+//        +  User.USER_ID + " = ? "
 
-
-
-        String queryPassword = "SELECT "
-
-                + User.USER_ID + ","
-                + User.USERNAME + ","
-                + User.ROLE + ""
-
-                + " FROM " + User.TABLE_NAME
-                + " WHERE "
-                + " ( " + User.USERNAME + " = ? "
-                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
-                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
-                + " OR " + " ( " + User.PHONE + " = ?" + ")" + ")"
-                + " AND " + User.PASSWORD + " = ? ";
+//        + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
+//                + User.USERNAME + " = ?"
+//                + " AND " + User.PASSWORD + " = ?";
 
 
 
-//        CAST (" + User.TIMESTAMP_TOKEN_EXPIRES + " AS TIMESTAMP)"
+//
+//        String insertToken = "";
+//
+//        insertToken = "INSERT INTO "
+//                + UserTokens.TABLE_NAME
+//                + "("
+//                + UserTokens.LOCAL_USER_ID + ","
+//                + UserTokens.TOKEN_STRING + ""
+//                + ") SELECT "
+//                + User.USER_ID + ","
+//                + " ? " + ""
+//                + " FROM "  + User.TABLE_NAME
+//                + " WHERE "
+//                + " ( " + User.USERNAME + " = ? "
+//                + " OR " +  User.USER_ID + " = ? "
+//                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
+//                + " OR " + " ( " + User.PHONE + " = ?" + ")"
+//                + ")";
+
+
+
 
 
 
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet rs = null;
 
-
-        //Distributor distributor = null;
-        User user = null;
+        int rowCountUpdated = 0;
 
         try {
 
-//            System.out.println(query);
-
             connection = dataSource.getConnection();
-            statement = connection.prepareStatement(queryToken);
+            statement = connection.prepareStatement(updateStatement);
+
+
+
+            String generatedToken = new BigInteger(130, Globals.random).toString(32);
+
 
             int i = 0;
+
+            statement.setString(++i,generatedToken);
+//            statement.setTimestamp(++i,user.getTimestampTokenExpires());
+
             statement.setString(++i,username); // username
             statement.setString(++i,username); // userID
             statement.setString(++i,username); // email
             statement.setString(++i,username); // phone
-            statement.setString(++i,token); // token
-//            statement.setTimestamp(++i,new Timestamp(System.currentTimeMillis()));
+//            statement.setString(++i,token); // token
+
+            rowCountUpdated = statement.executeUpdate();
 
 
-            rs = statement.executeQuery();
 
-            while(rs.next())
-            {
-                user = new User();
+//
+//            statement = connection.prepareStatement(insertToken);
+//
+//            i = 0;
+//
+//            statement.setString(++i,user.getToken());
+//            statement.setString(++i,user.getUsername());
+//            statement.setObject(++i,user.getUserID());
+//            statement.setString(++i,user.getEmail());
+//            statement.setString(++i,user.getPhone());
+//
+//            statement.executeUpdate();
 
-                user.setUserID(rs.getInt(User.USER_ID));
-                user.setUsername(rs.getString(User.USERNAME));
-                user.setRole(rs.getInt(User.ROLE));
-            }
 
-
-            //System.out.println("Total itemCategories queried " + itemCategoryList.size());
-
+//            System.out.println("Total rows updated: " + rowCountUpdated);
 
 
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } finally
+        }
+        finally
 
         {
-
-            try {
-                if(rs!=null)
-                {rs.close();}
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
 
             try {
 
@@ -1008,8 +1016,9 @@ public class DAOUserNew {
             }
         }
 
-        return user;
+        return rowCountUpdated;
     }
+
 
 
 
@@ -1118,7 +1127,169 @@ public class DAOUserNew {
 
 
 
-    public User getProfile(String username, String token)
+    public User checkTokenAndGetProfile(String username)
+    {
+        User user = getProfileWithToken(username);
+
+        if(user==null)
+        {
+            return null;
+        }
+
+        if(user.getToken()==null || user.getToken().equals(""))
+        {
+            updateToken(username);
+            user = getProfileWithToken(username);
+        }
+
+        return user;
+    }
+
+
+
+
+    public User getProfileWithToken(String username)
+    {
+
+
+        String query = "SELECT "
+
+                + User.USER_ID + ","
+                + User.USERNAME + ","
+//                + User.PASSWORD + ","
+                + User.E_MAIL + ","
+                + User.PHONE + ","
+//                + User.IS_PHONE_VERIFIED + ","
+                + User.NAME + ","
+                + User.SECRET_CODE + ","
+                + User.GENDER + ","
+                + User.PROFILE_IMAGE_URL + ","
+                + User.ROLE + ","
+                + User.IS_ACCOUNT_PRIVATE + ","
+                + User.ABOUT + ","
+                + User.SERVICE_ACCOUNT_BALANCE + ","
+                + User.IS_ACCOUNT_PRIVATE + ","
+                + User.TOKEN + ""
+//                + User.TIMESTAMP_TOKEN_EXPIRES + ""
+
+                + " FROM " + User.TABLE_NAME
+                + " WHERE "
+                + " ( " + User.USERNAME + " = ? "
+                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
+                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
+                + " OR " + " ( " + User.PHONE + " = ?" + ")"
+                + ")";
+
+
+
+//                + " ( " + User.USERNAME + " = ? "
+//                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? )";
+
+//        CAST (" + User.TIMESTAMP_TOKEN_EXPIRES + " AS TIMESTAMP)"
+
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+
+        //Distributor distributor = null;
+        User user = null;
+
+        try {
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(query);
+
+            int i = 0;
+
+
+            statement.setString(++i,username); // username
+            statement.setString(++i,username); // userID
+            statement.setString(++i,username); // email
+            statement.setString(++i,username); // phone
+
+
+//            statement.setString(++i,username); // username
+//            statement.setString(++i,username); // userID
+
+
+            rs = statement.executeQuery();
+
+            while(rs.next())
+            {
+                user = new User();
+
+                user.setUserID(rs.getInt(User.USER_ID));
+                user.setUsername(rs.getString(User.USERNAME));
+//                user.setPassword(rs.getString(User.PASSWORD));
+                user.setEmail(rs.getString(User.E_MAIL));
+                user.setPhone(rs.getString(User.PHONE));
+//                user.setPhoneVerified(rs.getBoolean(User.IS_PHONE_VERIFIED));
+                user.setName(rs.getString(User.NAME));
+                user.setSecretCode(rs.getInt(User.SECRET_CODE));
+                user.setGender(rs.getBoolean(User.GENDER));
+                user.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
+                user.setRole(rs.getInt(User.ROLE));
+                user.setAccountPrivate(rs.getBoolean(User.IS_ACCOUNT_PRIVATE));
+                user.setServiceAccountBalance(rs.getDouble(User.SERVICE_ACCOUNT_BALANCE));
+                user.setAbout(rs.getString(User.ABOUT));
+
+                user.setToken(rs.getString(User.TOKEN));
+//                user.setTimestampTokenExpires(rs.getTimestamp(User.TIMESTAMP_TOKEN_EXPIRES));
+
+//
+//                if(user.getToken()==null || user.getToken().equals(""))
+//                {
+//                    updateToken(user);
+//                }
+
+            }
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally
+
+        {
+
+            try {
+                if(rs!=null)
+                {rs.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+
+        return user;
+    }
+
+
+
+
+    public User getProfileUsingToken(String username, String token)
     {
 
         boolean isFirst = true;
@@ -1202,139 +1373,6 @@ public class DAOUserNew {
 //                user.setPhoneVerified(rs.getBoolean(User.IS_PHONE_VERIFIED));
                 user.setName(rs.getString(User.NAME));
                 user.setSecretCode(rs.getInt(User.SECRET_CODE));
-                user.setGender(rs.getBoolean(User.GENDER));
-                user.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
-                user.setRole(rs.getInt(User.ROLE));
-                user.setAccountPrivate(rs.getBoolean(User.IS_ACCOUNT_PRIVATE));
-                user.setServiceAccountBalance(rs.getDouble(User.SERVICE_ACCOUNT_BALANCE));
-                user.setAbout(rs.getString(User.ABOUT));
-
-//                user.setToken(rs.getString(User.TOKEN));
-//                user.setTimestampTokenExpires(rs.getTimestamp(User.TIMESTAMP_TOKEN_EXPIRES));
-
-            }
-
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } finally
-
-        {
-
-            try {
-                if(rs!=null)
-                {rs.close();}
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            try {
-
-                if(statement!=null)
-                {statement.close();}
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            try {
-
-                if(connection!=null)
-                {connection.close();}
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-        return user;
-    }
-
-
-    public User getProfileUsingToken(String username, String token)
-    {
-
-        boolean isFirst = true;
-
-        String query = "SELECT "
-
-                + User.USER_ID + ","
-                + User.USERNAME + ","
-//                + User.PASSWORD + ","
-                + User.E_MAIL + ","
-                + User.PHONE + ","
-//                + User.IS_PHONE_VERIFIED + ","
-                + User.NAME + ","
-                + User.SECRET_CODE + ","
-
-                + User.GENDER + ","
-                + User.PROFILE_IMAGE_URL + ","
-                + User.ROLE + ","
-                + User.IS_ACCOUNT_PRIVATE + ","
-                + User.ABOUT + ","
-                + User.SERVICE_ACCOUNT_BALANCE + ","
-                + User.IS_ACCOUNT_PRIVATE + ""
-//                + User.TOKEN + ","
-//                + User.TIMESTAMP_TOKEN_EXPIRES + ""
-
-                + " FROM " + User.TABLE_NAME
-                + " WHERE "
-                + " ( " + User.USERNAME + " = ? "
-                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
-                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
-                + " OR " + " ( " + User.PHONE + " = ?" + ")"
-                + ")"
-                + " AND " + User.TOKEN + " = ? ";
-
-
-
-//                + " ( " + User.USERNAME + " = ? "
-//                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? )";
-
-//        CAST (" + User.TIMESTAMP_TOKEN_EXPIRES + " AS TIMESTAMP)"
-
-
-
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-
-
-        //Distributor distributor = null;
-        User user = null;
-
-        try {
-
-            connection = dataSource.getConnection();
-            statement = connection.prepareStatement(query);
-
-            int i = 0;
-
-
-            statement.setString(++i,username); // username
-            statement.setString(++i,username); // userID
-            statement.setString(++i,username); // email
-            statement.setString(++i,username); // phone
-            statement.setString(++i,token); // password
-
-
-            rs = statement.executeQuery();
-
-            while(rs.next())
-            {
-                user = new User();
-
-                user.setUserID(rs.getInt(User.USER_ID));
-                user.setUsername(rs.getString(User.USERNAME));
-//                user.setPassword(rs.getString(User.PASSWORD));
-                user.setEmail(rs.getString(User.E_MAIL));
-                user.setPhone(rs.getString(User.PHONE));
-//                user.setPhoneVerified(rs.getBoolean(User.IS_PHONE_VERIFIED));
-                user.setName(rs.getString(User.NAME));
-                user.setSecretCode(rs.getInt(User.SECRET_CODE));
-
                 user.setGender(rs.getBoolean(User.GENDER));
                 user.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
                 user.setRole(rs.getInt(User.ROLE));

@@ -32,3 +32,19 @@
 	<%@include file="editShop.jsp"%>
 </c:if>
 
+<c:if test="${userPageUnderConstruction == true }">
+	<%@include file="underConstruction.jsp"%>
+</c:if>
+
+<c:if test="${userClickOrders == true }">
+	<%@include file="order.jsp"%>
+</c:if>
+
+<c:if test="${userClickUsers == true }">
+	<%@include file="users.jsp"%>
+</c:if>
+
+<c:if test="${userClickEditUser == true }">
+	<%@include file="editUser.jsp"%>
+</c:if>
+

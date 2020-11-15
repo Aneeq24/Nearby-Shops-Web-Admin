@@ -3,117 +3,59 @@
 		<div class="sidenav-menu">
 			<div class="nav accordion" id="accordionSidenav">
 				<div class="sidenav-menu-heading">Dashboard</div>
-				<c:choose>
-					<c:when test="${userClickDashboard == true }">
-						<a class="nav-link active" href="/dashboard">
-							<div class="nav-link-icon">
-								<i data-feather="bar-chart"></i>
-							</div> Dashboard
-						</a>
-					</c:when>
-					<c:otherwise>
-						<a class="nav-link" href="/dashboard">
-							<div class="nav-link-icon">
-								<i data-feather="bar-chart"></i>
-							</div> Dashboard
-						</a>
-					</c:otherwise>
-				</c:choose>
-				<div class="sidenav-menu-heading">Shops & Items</div>
-				<a class="nav-link collapsed" href="javascript:void(0);"
-					data-toggle="collapse" data-target="#collapseDashboards"
-					aria-expanded="false" aria-controls="collapseDashboards">
+				<a class="nav-link" href="${contextRoot }/shops">
 					<div class="nav-link-icon">
-						<i data-feather="activity"></i>
-					</div> Shops & Items
-					<div class="sidenav-collapse-arrow">
-						<i class="fas fa-angle-down"></i>
-					</div>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+							viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="feather feather-activity">
+									<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+					</div> Dashboard
 				</a>
-				<div class="collapse" id="collapseDashboards"
-					data-parent="#accordionSidenav">
-					<nav class="sidenav-menu-nested nav accordion"
-						id="accordionSidenavPages">
-						<a class="nav-link" href="/shops"> Shops <!-- <span class="badge badge-primary-soft text-primary ml-auto">Updated</span> -->
-						</a> <a class="nav-link" href="/getCategory/1"> Items <!-- <span class="badge badge-primary-soft text-primary ml-auto">Updated</span> -->
-						</a>
-						<!-- <a class="nav-link" href="dashboard-3.html">
-                                        Affiliate
-                                        <span class="badge badge-primary-soft text-primary ml-auto">Updated</span>
-                                    </a> -->
-					</nav>
-				</div>
+				<div class="sidenav-menu-heading">Shops & Items</div>
+				<a class="nav-link" href="${contextRoot}/shops">
+					<div class="nav-link-icon">
+						<i class="fas fa-store-alt"></i>
+					</div> Shops
+				</a> <a class="nav-link" href="${contextRoot}/getCategory/1">
+					<div class="nav-link-icon">
+
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+							viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+							class="feather feather-activity">
+							<line x1="8" y1="6" x2="21" y2="6"></line>
+							<line x1="8" y1="12" x2="21" y2="12"></line>
+							<line x1="8" y1="18" x2="21" y2="18"></line>
+							<line x1="3" y1="6" x2="3" y2="6"></line>
+							<line x1="3" y1="12" x2="3" y2="12"></line>
+							<line x1="3" y1="18" x2="3" y2="18"></line></svg>
+					</div> Items
+				</a>
 				<div class="sidenav-menu-heading">Orders</div>
-				<a class="nav-link collapsed" href="javascript:void(0);"
-					data-toggle="collapse" data-target="#collapsePages"
-					aria-expanded="false" aria-controls="collapsePages">
+
+				<a class="nav-link" href="${contextRoot}/orders">
 					<div class="nav-link-icon">
-						<i data-feather="grid"></i>
-					</div> Order History <!-- <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
-				</a> <a class="nav-link collapsed" href="javascript:void(0);"
-					data-toggle="collapse" data-target="#collapseFlows"
-					aria-expanded="false" aria-controls="collapseFlows">
+						<i class="fas fa-shopping-basket"></i>
+					</div> Order History
+				</a> <a class="nav-link" href="${contextRoot}/underConstruction">
 					<div class="nav-link-icon">
-						<i data-feather="repeat"></i>
-					</div> Market Configuration <!-- <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div> -->
+						<i class="fas fa-cogs"></i>
+					</div> Market Configuration
 				</a>
 				<div class="sidenav-menu-heading">Accounts</div>
-				<a class="nav-link collapsed" href="javascript:void(0);"
-					data-toggle="collapse" data-target="#collapseLayouts"
-					aria-expanded="false" aria-controls="collapseLayouts">
+				<a class="nav-link" href="${contextRoot}/users">
 					<div class="nav-link-icon">
-						<i data-feather="layout"></i>
-					</div> Accounts
-					<div class="sidenav-collapse-arrow">
-						<i class="fas fa-angle-down"></i>
-					</div>
+						<i class="far fa-user"></i>
+					</div> User Accounts
 				</a>
-				<div class="collapse" id="collapseLayouts"
-					data-parent="#accordionSidenav">
-					<nav class="sidenav-menu-nested nav accordion"
-						id="accordionSidenavLayout">
-						<a class="nav-link collapsed" href="javascript:void(0);"
-							data-toggle="collapse"
-							data-target="#collapseLayoutSidenavVariations"
-							aria-expanded="false"
-							aria-controls="collapseLayoutSidenavVariations"> User
-							Accounts
-							<div class="sidenav-collapse-arrow">
-								<i class="fas fa-angle-down"></i>
-							</div>
-						</a> <a class="nav-link collapsed" href="javascript:void(0);"
-							data-toggle="collapse" data-target="#collapseLayoutContainers"
-							aria-expanded="false" aria-controls="collapseLayoutContainers">
-							Staff Accounts
-							<div class="sidenav-collapse-arrow">
-								<i class="fas fa-angle-down"></i>
-							</div>
-						</a> <a class="nav-link collapsed" href="javascript:void(0);"
-							data-toggle="collapse" data-target="#collapseLayoutsPageHeaders"
-							aria-expanded="false" aria-controls="collapseLayoutsPageHeaders">
-							Page Headers
-							<div class="sidenav-collapse-arrow">
-								<i class="fas fa-angle-down"></i>
-							</div>
-						</a>
-					</nav>
-				</div>
-				<div class="sidenav-menu-heading">Delivery</div>
-				<a class="nav-link" href="charts.html">
-					<div class="nav-link-icon">
-						<i data-feather="bar-chart"></i>
-					</div> Delivery Inventory
-				</a> <a class="nav-link" href="tables.html">
-					<div class="nav-link-icon">
-						<i data-feather="filter"></i>
-					</div> Delivery Staff
-				</a>
+				
 			</div>
 		</div>
 		<div class="sidenav-footer">
 			<div class="sidenav-footer-content">
 				<div class="sidenav-footer-subtitle">Logged in as:</div>
-				<div class="sidenav-footer-title"><%= session.getAttribute("username") %></div>
+				<div class="sidenav-footer-title"><%=session.getAttribute("username")%></div>
 			</div>
 		</div>
 	</nav>

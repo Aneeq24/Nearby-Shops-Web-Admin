@@ -21,8 +21,222 @@ public class DAOUserTokens {
     DataSource dataSource;
 
 
+    public User verifyUserSimplePassword(String username, String password)
+    {
 
-    public User verifyUser(String username, String tokenString)
+
+        String queryPassword = "SELECT "
+
+                + User.USER_ID + ","
+                + User.USERNAME + ","
+                + User.ROLE + ""
+
+                + " FROM " + User.TABLE_NAME
+                + " WHERE "
+                + " ( " + User.USERNAME + " = ? "
+                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
+                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
+                + " OR " + " ( " + User.PHONE + " = ?" + ")" + ")"
+                + " AND " + User.PASSWORD + " = ? ";
+
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+
+        //Distributor distributor = null;
+        User user = null;
+
+        try {
+
+//            System.out.println(query);
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(queryPassword);
+
+            int i = 0;
+            statement.setString(++i,username); // username
+            statement.setString(++i,username); // userID
+            statement.setString(++i,username); // email
+            statement.setString(++i,username); // phone
+            statement.setString(++i,password); // token
+
+            rs = statement.executeQuery();
+
+            while(rs.next())
+            {
+                user = new User();
+
+                user.setUserID(rs.getInt(User.USER_ID));
+                user.setUsername(rs.getString(User.USERNAME));
+                user.setRole(rs.getInt(User.ROLE));
+            }
+
+
+            //System.out.println("Total itemCategories queried " + itemCategoryList.size());
+
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally
+
+        {
+
+            try {
+                if(rs!=null)
+                {rs.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return user;
+    }
+
+    public User verifyUserSimpleToken(String username, String token)
+    {
+
+        String queryToken = "SELECT "
+
+                + User.USER_ID + ","
+                + User.USERNAME + ","
+                + User.ROLE + ""
+
+                + " FROM " + User.TABLE_NAME
+                + " WHERE "
+                + " ( " + User.USERNAME + " = ? "
+                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
+                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
+                + " OR " + " ( " + User.PHONE + " = ?" + ")" + ")"
+                + " AND " + User.TOKEN + " = ? ";
+
+//        + " AND " + User.TIMESTAMP_TOKEN_EXPIRES + " > now()"
+
+
+
+        String queryPassword = "SELECT "
+
+                + User.USER_ID + ","
+                + User.USERNAME + ","
+                + User.ROLE + ""
+
+                + " FROM " + User.TABLE_NAME
+                + " WHERE "
+                + " ( " + User.USERNAME + " = ? "
+                + " OR " + " CAST ( " +  User.USER_ID + " AS text ) " + " = ? "
+                + " OR " + " ( " + User.E_MAIL + " = ?" + ")"
+                + " OR " + " ( " + User.PHONE + " = ?" + ")" + ")"
+                + " AND " + User.PASSWORD + " = ? ";
+
+
+
+//        CAST (" + User.TIMESTAMP_TOKEN_EXPIRES + " AS TIMESTAMP)"
+
+
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet rs = null;
+
+
+        //Distributor distributor = null;
+        User user = null;
+
+        try {
+
+//            System.out.println(query);
+
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(queryToken);
+
+            int i = 0;
+            statement.setString(++i,username); // username
+            statement.setString(++i,username); // userID
+            statement.setString(++i,username); // email
+            statement.setString(++i,username); // phone
+            statement.setString(++i,token); // token
+//            statement.setTimestamp(++i,new Timestamp(System.currentTimeMillis()));
+
+
+            rs = statement.executeQuery();
+
+            while(rs.next())
+            {
+                user = new User();
+
+                user.setUserID(rs.getInt(User.USER_ID));
+                user.setUsername(rs.getString(User.USERNAME));
+                user.setRole(rs.getInt(User.ROLE));
+            }
+
+
+            //System.out.println("Total itemCategories queried " + itemCategoryList.size());
+
+
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally
+
+        {
+
+            try {
+                if(rs!=null)
+                {rs.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(statement!=null)
+                {statement.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            try {
+
+                if(connection!=null)
+                {connection.close();}
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        return user;
+    }
+
+
+
+    public User verifyUserJoin(String username, String tokenString)
     {
 
         String queryToken = "SELECT "

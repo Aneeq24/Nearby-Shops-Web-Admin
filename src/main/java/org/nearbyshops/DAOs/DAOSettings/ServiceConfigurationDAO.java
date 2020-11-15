@@ -357,6 +357,7 @@ public class ServiceConfigurationDAO {
 		return market;
 	}
 
+
 	public void setMarket(Market market) {
 		this.market = market;
 	}

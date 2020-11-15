@@ -33,13 +33,9 @@ public class UtilityMethods {
     }
 
 
-
-
     public static int getRandomIntegerBetweenRange(int min, int max){
         return (int)(Math.random()*((max-min)+1))+min;
     }
-
-
 
 
     public static char[] generateOTP(int length) {
@@ -53,7 +49,6 @@ public class UtilityMethods {
 
         return otp;
     }
-
 
 
     public static float distFrom(double lat1, double lng1, double lat2, double lng2) {

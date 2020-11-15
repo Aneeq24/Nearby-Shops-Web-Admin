@@ -50,7 +50,7 @@ public class MarketSettingsDAO {
 //				+ MarketSettings.SMTP_USERNAME + ","
 //				+ MarketSettings.SMTP_PASSWORD + ","
 
-				+ MarketSettings.EMAIL_SENDER_NAME + ","
+//				+ MarketSettings.EMAIL_SENDER_NAME + ","
 //				+ MarketSettings.EMAIL_ADDRESS_FOR_SENDER + ","
 
 				+ MarketSettings.COD_ENABLED + ","
@@ -60,8 +60,8 @@ public class MarketSettingsDAO {
 //				+ MarketSettings.RAZOR_PAY_KEY_SECRET + ","
 
 //				+ MarketSettings.MSG_91_API_KEY + ","
-				+ MarketSettings.SENDER_ID_FOR_SMS + ","
-				+ MarketSettings.SERVICE_NAME_FOR_SMS + ","
+//				+ MarketSettings.SENDER_ID_FOR_SMS + ","
+//				+ MarketSettings.SERVICE_NAME_FOR_SMS + ","
 
 				+ MarketSettings.DEFAULT_COUNTRY_CODE + ","
 				+ MarketSettings.LOGIN_USING_OTP_ENABLED + ","
@@ -79,7 +79,7 @@ public class MarketSettingsDAO {
 
 				+ MarketSettings.SETTING_ID + ""
 
-				+ " ) VALUES (?,? ,?,?,? ,?,? ,?,? ,?,?,?,?,? ,?,?,?,? ,?)";
+				+ " ) VALUES (?,?,? ,?,? ,?,?,?,?,? ,?,?,?,? ,?)";
 		
 		try {
 			
@@ -95,7 +95,7 @@ public class MarketSettingsDAO {
 //			statement.setString(++i, market.getSmtpUsername());
 //			statement.setString(++i, market.getSmtpPassword());
 
-			statement.setString(++i, market.getEmailSenderName());
+//			statement.setString(++i, market.getEmailSenderName());
 //			statement.setString(++i, market.getEmailAddressForSender());
 
 			statement.setBoolean(++i, market.isCodEnabled());
@@ -105,8 +105,8 @@ public class MarketSettingsDAO {
 //			statement.setString(++i, market.getRazorPayKeySecret());
 
 //			statement.setString(++i, market.getMsg91APIKey());
-			statement.setString(++i, market.getSenderIDForSMS());
-			statement.setString(++i, market.getServiceNameForSMS());
+//			statement.setString(++i, market.getSenderIDForSMS());
+//			statement.setString(++i, market.getServiceNameForSMS());
 
 			statement.setObject(++i, market.getDefaultCountryCode());
 			statement.setObject(++i, market.isLoginUsingOTPEnabled());
@@ -187,7 +187,7 @@ public class MarketSettingsDAO {
 //				+ MarketSettings.SMTP_USERNAME + " = ?,"
 //				+ MarketSettings.SMTP_PASSWORD + " = ?,"
 
-				+ MarketSettings.EMAIL_SENDER_NAME + " = ?,"
+//				+ MarketSettings.EMAIL_SENDER_NAME + " = ?,"
 //				+ MarketSettings.EMAIL_ADDRESS_FOR_SENDER + " = ?,"
 
 				+ MarketSettings.COD_ENABLED + " = ?,"
@@ -197,8 +197,8 @@ public class MarketSettingsDAO {
 //				+ MarketSettings.RAZOR_PAY_KEY_SECRET + " = ?,"
 
 //				+ MarketSettings.MSG_91_API_KEY + " = ?,"
-				+ MarketSettings.SENDER_ID_FOR_SMS + " = ?,"
-				+ MarketSettings.SERVICE_NAME_FOR_SMS + " = ?,"
+//				+ MarketSettings.SENDER_ID_FOR_SMS + " = ?,"
+//				+ MarketSettings.SERVICE_NAME_FOR_SMS + " = ?,"
 
 				+ MarketSettings.DEFAULT_COUNTRY_CODE + " = ?,"
 				+ MarketSettings.LOGIN_USING_OTP_ENABLED + " = ?,"
@@ -233,7 +233,7 @@ public class MarketSettingsDAO {
 //			statement.setString(++i, market.getSmtpUsername());
 //			statement.setString(++i, market.getSmtpPassword());
 
-			statement.setString(++i, market.getEmailSenderName());
+//			statement.setString(++i, market.getEmailSenderName());
 //			statement.setString(++i, market.getEmailAddressForSender());
 
 			statement.setBoolean(++i, market.isCodEnabled());
@@ -243,8 +243,8 @@ public class MarketSettingsDAO {
 //			statement.setString(++i, market.getRazorPayKeySecret());
 //
 //			statement.setString(++i, market.getMsg91APIKey());
-			statement.setString(++i, market.getSenderIDForSMS());
-			statement.setString(++i, market.getServiceNameForSMS());
+//			statement.setString(++i, market.getSenderIDForSMS());
+//			statement.setString(++i, market.getServiceNameForSMS());
 
 			statement.setObject(++i, market.getDefaultCountryCode());
 			statement.setObject(++i, market.isLoginUsingOTPEnabled());
@@ -370,7 +370,7 @@ public class MarketSettingsDAO {
 //						+ MarketSettings.SMTP_USERNAME + ","
 //						+ MarketSettings.SMTP_PASSWORD + ","
 
-						+ MarketSettings.EMAIL_SENDER_NAME + ","
+//						+ MarketSettings.EMAIL_SENDER_NAME + ","
 						+ MarketSettings.EMAIL_ADDRESS_FOR_SENDER + ","
 
 						+ MarketSettings.COD_ENABLED + ","
@@ -380,8 +380,8 @@ public class MarketSettingsDAO {
 //						+ MarketSettings.RAZOR_PAY_KEY_SECRET + ","
 
 //						+ MarketSettings.MSG_91_API_KEY + ","
-						+ MarketSettings.SENDER_ID_FOR_SMS + ","
-						+ MarketSettings.SERVICE_NAME_FOR_SMS + ","
+//						+ MarketSettings.SENDER_ID_FOR_SMS + ","
+//						+ MarketSettings.SERVICE_NAME_FOR_SMS + ","
 
 						+ MarketSettings.DEFAULT_COUNTRY_CODE + ","
 						+ MarketSettings.LOGIN_USING_OTP_ENABLED + ","
@@ -427,7 +427,7 @@ public class MarketSettingsDAO {
 //				market.setSmtpUsername(rs.getString(MarketSettings.SMTP_USERNAME));
 //				market.setSmtpPassword(rs.getString(MarketSettings.SMTP_PASSWORD));
 
-				market.setEmailSenderName(rs.getString(MarketSettings.EMAIL_SENDER_NAME));
+//				market.setEmailSenderName(rs.getString(MarketSettings.EMAIL_SENDER_NAME));
 //				market.setEmailAddressForSender(rs.getString(MarketSettings.EMAIL_ADDRESS_FOR_SENDER));
 
 				market.setCodEnabled(rs.getBoolean(MarketSettings.COD_ENABLED));
@@ -437,8 +437,8 @@ public class MarketSettingsDAO {
 //				market.setRazorPayKeySecret(rs.getString(MarketSettings.RAZOR_PAY_KEY_SECRET));
 
 //				market.setMsg91APIKey(rs.getString(MarketSettings.MSG_91_API_KEY));
-				market.setSenderIDForSMS(rs.getString(MarketSettings.SENDER_ID_FOR_SMS));
-				market.setServiceNameForSMS(rs.getString(MarketSettings.SERVICE_NAME_FOR_SMS));
+//				market.setSenderIDForSMS(rs.getString(MarketSettings.SENDER_ID_FOR_SMS));
+//				market.setServiceNameForSMS(rs.getString(MarketSettings.SERVICE_NAME_FOR_SMS));
 
 				market.setDefaultCountryCode(rs.getInt(MarketSettings.DEFAULT_COUNTRY_CODE));
 				market.setLoginUsingOTPEnabled(rs.getBoolean(MarketSettings.LOGIN_USING_OTP_ENABLED));
@@ -507,12 +507,12 @@ public class MarketSettingsDAO {
 
 		settings.setSettingID(1);
 //		settings.setEmailAddressForSender("abcde@example.org");
-		settings.setEmailSenderName("Example Sender");
+//		settings.setEmailSenderName("Example Sender");
 		settings.setCodEnabled(true);
 		settings.setPodEnabled(true);
 		settings.setRazorPayEnabled(false);
-		settings.setSenderIDForSMS("ABCDEF");
-		settings.setServiceNameForSMS("Nearby Shops");
+//		settings.setSenderIDForSMS("ABCDEF");
+//		settings.setServiceNameForSMS("Nearby Shops");
 		settings.setDefaultCountryCode(91);
 		settings.setLoginUsingOTPEnabled(false);
 		settings.setMarketFeePickupFromShop(5);

@@ -1,33 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%-- <h1>Edit Shop</h1>  
-       <form:form method="POST" action="/editsave" modelAttribute="Shop">    
-        <table >    
-        <tr>  
-        <td></td>    
-         <td><form:hidden  path="shopID" /></td>  
-         </tr>   
-         <tr>    
-          <td>Name : </td>   
-          <td><form:input path="shopName"  /></td>  
-         </tr>    
-         <tr>    
-          <td>City :</td>    
-          <td><form:input path="city" /></td>  
-         </tr>   
-         <tr>    
-          <td>Pincode :</td>    
-          <td><form:input path="pincode" /></td>  
-         </tr>   
-           
-         <tr>    
-          <td> </td>    
-          <td><input type="submit" value="Edit Save" /></td>    
-         </tr>    
-        </table>    
-       </form:form> 
-        --%>
 <main>
 	<header
 		class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
@@ -39,7 +12,7 @@
 							<div class="page-header-icon">
 								<i data-feather="user"></i>
 							</div>
-							Shop Profile <%-- ${Shop } --%>
+							Shop Profile 
 						</h1>
 					</div>
 				</div>
@@ -56,8 +29,9 @@
 					<div class="card-header">Shop Profile Picture</div>
 					<div class="card-body text-center">
 						<!-- Profile picture image-->
-						<img class="img-account-profile rounded-circle mb-2"
-							src="https://source.unsplash.com/QAB-WJcbgJk/300x300" alt="" />
+						<img class="img-account-profile mb-2"
+								src="${assets}/img/shop.png"
+								alt="" />
 						<!-- Profile picture help block-->
 						<div class="small font-italic text-muted mb-4">JPG or PNG no
 							larger than 2 MB</div>
@@ -70,9 +44,9 @@
 			<div class="col-xl-8">
 				<!-- Account details card-->
 				<div class="card mb-4">
-					<div class="card-header">Account Details</div>
+					<div class="card-header">Shop Details</div>
 					<div class="card-body">
-						<form:form method="POST" action="/addShop" modelAttribute="Shop">
+						<form:form method="POST" action="${contextRoot}/addShop" modelAttribute="Shop">
 							<!-- Form Group (username)-->
 							<div class="form-group">
 								<label class="small mb-1" for="inputUsername">Shop Id</label>

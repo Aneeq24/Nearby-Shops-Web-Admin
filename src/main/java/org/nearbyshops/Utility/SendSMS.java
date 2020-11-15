@@ -7,6 +7,7 @@ import okhttp3.Request;
 import org.nearbyshops.AppProperties;
 import org.nearbyshops.Constants;
 import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
+import org.nearbyshops.DAOs.DAOSettings.ServiceConfigurationDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +32,10 @@ public class SendSMS {
     AppProperties appProperties;
 
 
+    @Autowired
+    ServiceConfigurationDAO serviceConfigurationDAO;
+
+
     Logger logger = Logger.getLogger(SendSMS.class.getName());
 
 
@@ -43,8 +48,8 @@ public class SendSMS {
 
         String urlOTP = "https://control.msg91.com/api/sendhttp.php?authkey=" + appProperties.getMsg91_apikey() +
                 "&mobiles=" + phone +
-                "&message=Your one time password (OTP) for " + marketSettingsDAO.getSettingsInstance().getServiceNameForSMS() + " is " + otp +
-                "&sender=" + marketSettingsDAO.getSettingsInstance().getSenderIDForSMS() +
+                "&message=Your one time password (OTP) for " + serviceConfigurationDAO.getMarketConfiguration().getServiceName() + " is " + otp +
+                "&sender=" + appProperties.getSender_id_for_sms() +
                 "&route=4&country=0";
 
 //        + GlobalConstants.default_country_code_value
@@ -116,7 +121,7 @@ public class SendSMS {
         String urlMessage = "http://api.msg91.com/api/sendhttp.php?authkey=" +  appProperties.getMsg91_apikey()
                 + "&mobiles=" + phone
                 + "&message=" + message
-                + "&sender=" + marketSettingsDAO.getSettingsInstance().getSenderIDForSMS()
+                + "&sender=" + appProperties.getSender_id_for_sms()
                 + "&route=4&country=0";
 
 //        + GlobalConstants.default_country_code_value

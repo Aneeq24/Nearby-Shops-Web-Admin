@@ -10,7 +10,9 @@ import org.nearbyshops.DAOs.DAOOrders.DAOOrderDeliveryGuy;
 import org.nearbyshops.DAOs.DAOOrders.DAOOrderUtility;
 import org.nearbyshops.DAOs.DAOOrders.OrderService;
 import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
+import org.nearbyshops.DAOs.DAOSettings.ServiceConfigurationDAO;
 import org.nearbyshops.Model.ModelRoles.User;
+import org.nearbyshops.Model.ModelSettings.Market;
 import org.nearbyshops.Model.ModelSettings.MarketSettings;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Utility.SendEmail;
@@ -67,6 +69,11 @@ public class OrderEndpointDeliveryGuySelf {
 
 	@Autowired
 	MarketSettingsDAO marketSettingsDAO;
+
+
+	@Autowired
+	ServiceConfigurationDAO serviceConfigurationDAO;
+
 
 
 
@@ -304,9 +311,11 @@ public class OrderEndpointDeliveryGuySelf {
 
 
 				MarketSettings settings = marketSettingsDAO.getSettingsInstance();
+				Market market = serviceConfigurationDAO.getMarketConfiguration();
+
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(settings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+						.from(market.getServiceName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Delivered")
 						.withHTMLText(htmlText)

@@ -9,11 +9,13 @@ import org.nearbyshops.Model.ModelRoles.EmailVerificationCode;
 import org.nearbyshops.Model.ModelRoles.PhoneVerificationCode;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.Shop;
+import org.nearbyshops.Utility.Globals;
 import org.nearbyshops.Utility.UtilityMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,6 +72,7 @@ public class DAOUserSignUp {
                 + "("
 
                 + User.PASSWORD + ","
+                + User.TOKEN + ","
                 + User.E_MAIL + ","
 
                 + User.NAME + ","
@@ -84,7 +87,7 @@ public class DAOUserSignUp {
                 + User.ABOUT + ""
                 + ") "
                 + " Select "
-                + " ?,? ,?,?,? ,?,?,?,?,?,? "
+                + " ?,?,? ,?,?,? ,?,?,?,?,?,? "
                 + " from " + EmailVerificationCode.TABLE_NAME
                 + " WHERE "
                 + "("
@@ -103,6 +106,7 @@ public class DAOUserSignUp {
                 + "("
 
                 + User.PASSWORD + ","
+                + User.TOKEN + ","
                 + User.PHONE + ","
 
                 + User.NAME + ","
@@ -117,7 +121,7 @@ public class DAOUserSignUp {
                 + User.ABOUT + ""
                 + ") "
                 + " Select "
-                + " ?,? ,?,?,? ,?,?,?,?,?,? "
+                + " ?,?,? ,?,?,? ,?,?,?,?,?,? "
                 + " from " + PhoneVerificationCode.TABLE_NAME
                 + " WHERE "
                 + "("
@@ -257,6 +261,9 @@ public class DAOUserSignUp {
             int i = 0;
 
 
+            String generatedToken = new BigInteger(130, Globals.random).toString(32);
+            user.setToken(generatedToken);
+
 
             if(user.getRt_registration_mode()==User.REGISTRATION_MODE_EMAIL)
             {
@@ -264,6 +271,7 @@ public class DAOUserSignUp {
 
 
                 statement.setString(++i,user.getPassword());
+                statement.setString(++i,user.getToken());
                 statement.setString(++i,user.getEmail());
 
 
@@ -313,6 +321,7 @@ public class DAOUserSignUp {
 
 
                 statement.setString(++i, user.getPassword());
+                statement.setString(++i,user.getToken());
                 statement.setString(++i, user.getPhoneWithCountryCode());
 
                 statement.setString(++i, user.getName());

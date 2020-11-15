@@ -4,10 +4,12 @@ import org.nearbyshops.Constants;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.ModelRoles.UserMarkets;
 import org.nearbyshops.Model.ModelRoles.UserTokens;
+import org.nearbyshops.Utility.Globals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -365,7 +367,6 @@ public class DAOLoginUsingOTP {
 
 
 
-
     public int updateUserProfile(User user)
     {
 
@@ -373,7 +374,9 @@ public class DAOLoginUsingOTP {
 
         String updateStatement = "UPDATE " + User.TABLE_NAME
 
-                + " SET " + User.TOKEN + "=?,"
+                + " SET "
+
+//                + User.TOKEN + "=?,"
 
                 + User.E_MAIL + "=?,"
                 + User.PHONE + "=?,"
@@ -388,21 +391,21 @@ public class DAOLoginUsingOTP {
                 + " ( " + " ( " + User.E_MAIL + " = ?" + ")" + " OR " + " ( " + User.PHONE + " = ?" + ")" + ")";
 
 
-
-        String insertToken = "";
-
-        insertToken = "INSERT INTO "
-                + UserTokens.TABLE_NAME
-                + "("
-                + UserTokens.LOCAL_USER_ID + ","
-                + UserTokens.TOKEN_STRING + ""
-                + ") SELECT "
-                + User.USER_ID + ","
-                + " ? " + ""
-                + " FROM "  + User.TABLE_NAME
-                + " WHERE "
-                + " ( " + User.E_MAIL + " = ?" + ")"
-                + " OR " + " ( " + User.PHONE + " = ?" + ")";
+//
+//        String insertToken = "";
+//
+//        insertToken = "INSERT INTO "
+//                + UserTokens.TABLE_NAME
+//                + "("
+//                + UserTokens.LOCAL_USER_ID + ","
+//                + UserTokens.TOKEN_STRING + ""
+//                + ") SELECT "
+//                + User.USER_ID + ","
+//                + " ? " + ""
+//                + " FROM "  + User.TABLE_NAME
+//                + " WHERE "
+//                + " ( " + User.E_MAIL + " = ?" + ")"
+//                + " OR " + " ( " + User.PHONE + " = ?" + ")";
 
 
 
@@ -420,7 +423,7 @@ public class DAOLoginUsingOTP {
 
             int i = 0;
 
-            statement.setString(++i,user.getToken());
+//            statement.setString(++i,user.getToken());
             statement.setString(++i,user.getEmail());
             statement.setString(++i,user.getPhone());
             statement.setString(++i,user.getName());
@@ -439,16 +442,16 @@ public class DAOLoginUsingOTP {
             rowCountUpdated = statement.executeUpdate();
 
 
-
-            statement = connection.prepareStatement(insertToken);
-
-            i = 0;
-
-            statement.setString(++i,user.getToken());
-            statement.setString(++i,user.getEmail());
-            statement.setString(++i,user.getPhone());
-
-            statement.executeUpdate();
+//
+//            statement = connection.prepareStatement(insertToken);
+//
+//            i = 0;
+//
+//            statement.setString(++i,user.getToken());
+//            statement.setString(++i,user.getEmail());
+//            statement.setString(++i,user.getPhone());
+//
+//            statement.executeUpdate();
 
 
         } catch (SQLException e) {
@@ -619,16 +622,16 @@ public class DAOLoginUsingOTP {
 
 
 
-
-
-        String insertToken = "";
-
-        insertToken = "INSERT INTO "
-                + UserTokens.TABLE_NAME
-                + "("
-                + UserTokens.LOCAL_USER_ID + ","
-                + UserTokens.TOKEN_STRING + ""
-                + ") VALUES(?,?)";
+//
+//
+//        String insertToken = "";
+//
+//        insertToken = "INSERT INTO "
+//                + UserTokens.TABLE_NAME
+//                + "("
+//                + UserTokens.LOCAL_USER_ID + ","
+//                + UserTokens.TOKEN_STRING + ""
+//                + ") VALUES(?,?)";
 
 
 
@@ -636,6 +639,12 @@ public class DAOLoginUsingOTP {
 
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
+
+
+
+            String generatedTokenLocal = new BigInteger(130, Globals.random).toString(32);
+            user.setToken(generatedTokenLocal);
+
 
 
             statement = connection.prepareStatement(insertUser,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -689,14 +698,14 @@ public class DAOLoginUsingOTP {
 
 
 
-
-            statement = connection.prepareStatement(insertToken);
-
-            i = 0;
-            statement.setInt(++i,idOfInsertedRow);
-            statement.setString(++i,user.getToken());
-
-            statement.executeUpdate();
+//
+//            statement = connection.prepareStatement(insertToken);
+//
+//            i = 0;
+//            statement.setInt(++i,idOfInsertedRow);
+//            statement.setString(++i,user.getToken());
+//
+//            statement.executeUpdate();
 
 
 

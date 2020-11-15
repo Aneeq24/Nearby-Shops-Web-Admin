@@ -8,9 +8,11 @@ import org.nearbyshops.DAOs.DAOOrders.OrderService;
 import org.nearbyshops.DAOs.DAORoles.DAOShopStaff;
 import org.nearbyshops.DAOs.DAORoles.DAOUserUtility;
 import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
+import org.nearbyshops.DAOs.DAOSettings.ServiceConfigurationDAO;
 import org.nearbyshops.Model.ModelEndpoint.UserEndpoint;
 import org.nearbyshops.Model.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.Model.ModelRoles.User;
+import org.nearbyshops.Model.ModelSettings.Market;
 import org.nearbyshops.Model.ModelSettings.MarketSettings;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Utility.SendEmail;
@@ -76,6 +78,10 @@ public class OrderEndpointShopStaff {
 
 	@Autowired
 	MarketSettingsDAO marketSettingsDAO;
+
+
+	@Autowired
+	ServiceConfigurationDAO serviceConfigurationDAO;
 
 
 
@@ -346,9 +352,11 @@ public class OrderEndpointShopStaff {
 
 
 				MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+				Market market = serviceConfigurationDAO.getMarketConfiguration();
+
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+						.from(market.getServiceName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Delivered")
 						.withHTMLText(htmlText)
@@ -825,9 +833,10 @@ public class OrderEndpointShopStaff {
 
 
 				MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+				Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+						.from(market.getServiceName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " Confirmed")
 						.withHTMLText(htmlText)
@@ -913,10 +922,11 @@ public class OrderEndpointShopStaff {
 
 
 				MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+				Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+						.from(market.getServiceName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " Packed")
 						.withHTMLText(htmlText)
@@ -1010,11 +1020,12 @@ public class OrderEndpointShopStaff {
 
 
 				MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+				Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+						.from(market.getServiceName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Ready for Pickup")
 						.withHTMLText(htmlText)
@@ -1108,10 +1119,11 @@ public class OrderEndpointShopStaff {
 
 
 				MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+				Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 
 				Email emailComposed = EmailBuilder.startingBlank()
-						.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+						.from(market.getServiceName(),appProperties.getEmail_address_for_sender())
 						.to(orderResult.getRt_end_user_profile().getName(),orderResult.getRt_end_user_profile().getEmail())
 						.withSubject("Order No. " + orderID + " is Delivered")
 						.withHTMLText(htmlText)

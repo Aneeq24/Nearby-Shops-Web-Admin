@@ -3,15 +3,19 @@ package org.nearbyshops.DAOs.DAORoles;
 import org.nearbyshops.Constants;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.ModelRoles.UserTokens;
+import org.nearbyshops.Utility.Globals;
 import org.nearbyshops.Utility.UtilityMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+
 
 @Component
 public class DAOLoginUsingOTPNew {
@@ -19,6 +23,7 @@ public class DAOLoginUsingOTPNew {
 
     @Autowired
     DataSource dataSource;
+
 
 
     public int upsertUserProfilePhone(User userProfile,
@@ -40,20 +45,21 @@ public class DAOLoginUsingOTPNew {
                         + User.TOKEN + ""
                         + ") values(?,?,?,?)"
                         + " ON CONFLICT (" + User.PHONE + ")"
-                        + " DO UPDATE "
-                        + " SET " + User.TOKEN + " = " + " excluded." + User.TOKEN + "";
+                        + " DO NOTHING ";
+
+        //        + " SET " + User.TOKEN + " = " + " excluded." + User.TOKEN + "";
 
 
 
 
-        String insertToken = "";
-
-        insertToken = "INSERT INTO "
-                + UserTokens.TABLE_NAME
-                + "("
-                + UserTokens.LOCAL_USER_ID + ","
-                + UserTokens.TOKEN_STRING + ""
-                + ") VALUES(?,?)";
+//        String insertToken = "";
+//
+//        insertToken = "INSERT INTO "
+//                + UserTokens.TABLE_NAME
+//                + "("
+//                + UserTokens.LOCAL_USER_ID + ","
+//                + UserTokens.TOKEN_STRING + ""
+//                + ") VALUES(?,?)";
 
 
 
@@ -61,6 +67,10 @@ public class DAOLoginUsingOTPNew {
 
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
+
+
+            String generatedToken = new BigInteger(130, Globals.random).toString(32);
+            userProfile.setToken(generatedToken);
 
 
             statement = connection.prepareStatement(insertItemSubmission,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -83,14 +93,14 @@ public class DAOLoginUsingOTPNew {
 
 
 
-
-            statement = connection.prepareStatement(insertToken);
-
-            i = 0;
-            statement.setInt(++i,idOfInsertedRow);
-            statement.setString(++i,userProfile.getToken());
-
-            statement.executeUpdate();
+//
+//            statement = connection.prepareStatement(insertToken);
+//
+//            i = 0;
+//            statement.setInt(++i,idOfInsertedRow);
+//            statement.setString(++i,userProfile.getToken());
+//
+//            statement.executeUpdate();
 
 
             connection.commit();
@@ -165,20 +175,20 @@ public class DAOLoginUsingOTPNew {
                         + User.TOKEN + ""
                         + ") values(?,?,?,?)"
                         + " ON CONFLICT (" + User.E_MAIL + ")"
-                        + " DO UPDATE "
-                        + " SET " + User.TOKEN + " = " + " excluded." + User.TOKEN + "";
+                        + " DO NOTHING ";
+
+//        + " SET " + User.TOKEN + " = " + " excluded." + User.TOKEN + "";
 
 
-
-
-        String insertToken = "";
-
-        insertToken = "INSERT INTO "
-                + UserTokens.TABLE_NAME
-                + "("
-                + UserTokens.LOCAL_USER_ID + ","
-                + UserTokens.TOKEN_STRING + ""
-                + ") VALUES(?,?)";
+//
+//        String insertToken = "";
+//
+//        insertToken = "INSERT INTO "
+//                + UserTokens.TABLE_NAME
+//                + "("
+//                + UserTokens.LOCAL_USER_ID + ","
+//                + UserTokens.TOKEN_STRING + ""
+//                + ") VALUES(?,?)";
 
 
 
@@ -186,6 +196,11 @@ public class DAOLoginUsingOTPNew {
 
             connection = dataSource.getConnection();
             connection.setAutoCommit(false);
+
+
+
+            String generatedToken = new BigInteger(130, Globals.random).toString(32);
+            userProfile.setToken(generatedToken);
 
 
             statement = connection.prepareStatement(insertItemSubmission,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -208,16 +223,16 @@ public class DAOLoginUsingOTPNew {
             }
 
 
-
-
-
-            statement = connection.prepareStatement(insertToken);
-
-            i = 0;
-            statement.setInt(++i,idOfInsertedRow);
-            statement.setString(++i,userProfile.getToken());
-
-            statement.executeUpdate();
+//
+//
+//
+//            statement = connection.prepareStatement(insertToken);
+//
+//            i = 0;
+//            statement.setInt(++i,idOfInsertedRow);
+//            statement.setString(++i,userProfile.getToken());
+//
+//            statement.executeUpdate();
 
 
             connection.commit();

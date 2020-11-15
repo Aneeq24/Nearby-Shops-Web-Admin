@@ -3,17 +3,13 @@ package org.nearbyshops.RESTEndpoints.RESTEndpointRoles;
 import net.coobird.thumbnailator.Thumbnails;
 import org.nearbyshops.AppProperties;
 import org.nearbyshops.Constants;
-import org.nearbyshops.DAOs.DAORoles.DAOShopStaff;
-import org.nearbyshops.DAOs.DAORoles.DAOStaff;
-import org.nearbyshops.DAOs.DAORoles.DAOUserNew;
-import org.nearbyshops.DAOs.DAORoles.DAOUserUtility;
+import org.nearbyshops.DAOs.DAORoles.*;
 import org.nearbyshops.Model.ModelEndpoint.UserEndpoint;
 import org.nearbyshops.Model.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.Model.ModelRoles.StaffPermissions;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Utility.Globals;
 import org.nearbyshops.Utility.UserAuthentication;
-import org.nearbyshops.Utility.UtilityMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +44,9 @@ public class UserLoginRESTEndpoint {
 
     @Autowired
     private DAOUserNew daoUserNew;
+
+    @Autowired
+    DAOUserTokens daoUserTokens;
 
     @Autowired
     private HttpServletRequest request;
@@ -371,7 +370,7 @@ public class UserLoginRESTEndpoint {
         String token = new BigInteger(130, Globals.random).toString(32);
         Timestamp timestampExpiry = new Timestamp(System.currentTimeMillis() + appProperties.getToken_duration_minutes() * 60 * 10);
 
-        User user = daoUserNew.getProfile(username,password);
+        User user = daoUserNew.getProfileUsingToken(username,password);
 
 
 
@@ -468,53 +467,24 @@ public class UserLoginRESTEndpoint {
 //        System.out.println(password);
 
 
-        String token = new BigInteger(130, Globals.random).toString(32);
-
-        Timestamp timestampExpiry = new Timestamp(System.currentTimeMillis() + appProperties.getToken_duration_minutes()*60*1000);
+        User user = daoUserTokens.verifyUserSimplePassword(username,password);
 
 
-//        Date dt = new Date();
-//        DateTime dtOrg = new DateTime(System.currentTimeMillis());
-//        DateTime dtPlusOne = dtOrg.plusDays(1);
-//        timestamp  = new Timestamp(dtPlusOne.getMillis());
-
-
-        User user = new User();
-        user.setUsername(username);
-        user.setPhone(username); // username could be phone number
-        user.setEmail(username); // username could be email
-
-        user.setPassword(password);
-        user.setToken(token);
-        user.setTimestampTokenExpires(timestampExpiry);
-
-        int rowsUpdated = daoUserNew.updateToken(user);
-
-
-
-
-        if(rowsUpdated==1)
+        if(user!=null)
         {
 
-            User userProfile = daoUserNew.getProfileUsingToken(username,token);
-            userProfile.setToken(token);
-            userProfile.setPassword(null);
-
+            User userProfile = daoUserNew.checkTokenAndGetProfile(username);
             return ResponseEntity.status(HttpStatus.OK)
                     .body(userProfile);
         }
-        else if(rowsUpdated==0)
+        else
         {
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED)
                     .build();
         }
-        else
-        {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .build();
-        }
 
     }
+
 
 
 

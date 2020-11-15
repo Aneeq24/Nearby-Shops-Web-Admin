@@ -120,7 +120,7 @@ public class MarketSettings {
 //    String smtpUsername;
 //    String smtpPassword;
 
-    String emailSenderName;
+//    String emailSenderName;
 //    String emailAddressForSender;
 
     boolean codEnabled;
@@ -130,8 +130,8 @@ public class MarketSettings {
 //    String razorPayKeySecret;
 
 //    String msg91APIKey;
-    String senderIDForSMS;
-    String serviceNameForSMS;
+//    String senderIDForSMS;
+//    String serviceNameForSMS;
 
     int defaultCountryCode;
     boolean loginUsingOTPEnabled;
@@ -201,14 +201,6 @@ public class MarketSettings {
     }
 
 
-    public String getEmailSenderName() {
-        return emailSenderName;
-    }
-
-    public void setEmailSenderName(String emailSenderName) {
-        this.emailSenderName = emailSenderName;
-    }
-
 
 
     public boolean isCodEnabled() {
@@ -235,21 +227,6 @@ public class MarketSettings {
         this.razorPayEnabled = razorPayEnabled;
     }
 
-    public String getSenderIDForSMS() {
-        return senderIDForSMS;
-    }
-
-    public void setSenderIDForSMS(String senderIDForSMS) {
-        this.senderIDForSMS = senderIDForSMS;
-    }
-
-    public String getServiceNameForSMS() {
-        return serviceNameForSMS;
-    }
-
-    public void setServiceNameForSMS(String serviceNameForSMS) {
-        this.serviceNameForSMS = serviceNameForSMS;
-    }
 
     public int getDefaultCountryCode() {
         return defaultCountryCode;

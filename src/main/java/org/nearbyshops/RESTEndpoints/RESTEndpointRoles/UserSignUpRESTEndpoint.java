@@ -8,9 +8,11 @@ import org.nearbyshops.DAOs.DAORoles.DAOPhoneVerificationCodes;
 import org.nearbyshops.DAOs.DAORoles.DAOUserSignUp;
 import org.nearbyshops.DAOs.DAORoles.DAOUserUtility;
 import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
+import org.nearbyshops.DAOs.DAOSettings.ServiceConfigurationDAO;
 import org.nearbyshops.Model.ModelRoles.EmailVerificationCode;
 import org.nearbyshops.Model.ModelRoles.PhoneVerificationCode;
 import org.nearbyshops.Model.ModelRoles.User;
+import org.nearbyshops.Model.ModelSettings.Market;
 import org.nearbyshops.Model.ModelSettings.MarketSettings;
 import org.nearbyshops.Utility.*;
 import org.simplejavamail.email.Email;
@@ -73,6 +75,12 @@ public class UserSignUpRESTEndpoint {
     DAOPhoneVerificationCodes daoPhoneVerificationCodes;
 
 
+
+    @Autowired
+    ServiceConfigurationDAO serviceConfigurationDAO;
+
+
+
     Logger logger = LoggerFactory.getLogger(UserSignUpRESTEndpoint.class);
 
 
@@ -102,6 +110,9 @@ public class UserSignUpRESTEndpoint {
 
     private ResponseEntity<Object> userRegistration(User user, int role)
     {
+
+        MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+        Market market = serviceConfigurationDAO.getMarketConfiguration();
 
         if(user==null)
         {
@@ -143,12 +154,11 @@ public class UserSignUpRESTEndpoint {
 
 
 
-                    MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
 
 
                     // registration successful therefore send email to notify the user
                     Email email = EmailBuilder.startingBlank()
-                            .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+                            .from(market.getServiceName(),appProperties.getEmail_address_for_sender())
                             .to(user.getName(),user.getEmail())
                             .withSubject("Registration successful for your account")
                             .withHTMLText(message)
@@ -164,11 +174,11 @@ public class UserSignUpRESTEndpoint {
 
                     if(user.getRole()== Constants.ROLE_SHOP_ADMIN_CODE)
                     {
-                        message = "Thank you for registering with " + marketSettingsDAO.getSettingsInstance().getServiceNameForSMS();
+                        message = "Thank you for registering with " + market.getServiceName();
                     }
                     else
                     {
-                        message = "Congratulations your account has been registered with " + marketSettingsDAO.getSettingsInstance().getServiceNameForSMS();
+                        message = "Congratulations your account has been registered with " + market.getServiceName();
                     }
 
 
@@ -303,9 +313,10 @@ public class UserSignUpRESTEndpoint {
 
 
                 MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+                Market market = serviceConfigurationDAO.getMarketConfiguration();
 
                 Email emailComposed = EmailBuilder.startingBlank()
-                        .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+                        .from(market.getServiceName(),appProperties.getEmail_address_for_sender())
                         .to("user",email)
                         .withSubject("E-mail Verification Code")
                         .withHTMLText(htmlText)
@@ -330,11 +341,12 @@ public class UserSignUpRESTEndpoint {
                     "<p>This verification code will expire at " + verificationCode.getTimestampExpires().toLocalDateTime().toString() + ". Please use this code before it expires.<p>";
 
             MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
+            Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 
 
             Email emailComposed = EmailBuilder.startingBlank()
-                    .from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+                    .from(market.getServiceName(),appProperties.getEmail_address_for_sender())
                     .to("user",email)
                     .withSubject("E-mail Verification Code")
                     .withHTMLText(htmlText)

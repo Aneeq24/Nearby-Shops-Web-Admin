@@ -11,12 +11,14 @@ import org.nearbyshops.DAOs.DAOOrders.OrderService;
 import org.nearbyshops.DAOs.DAOOrders.PlaceOrderDAO;
 import org.nearbyshops.DAOs.DAORoles.DAOUserUtility;
 import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
+import org.nearbyshops.DAOs.DAOSettings.ServiceConfigurationDAO;
 import org.nearbyshops.Model.ModelBilling.RazorPayOrder;
 import org.nearbyshops.Model.ModelEndpoint.DeliverySlotEndpoint;
 import org.nearbyshops.Model.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
 import org.nearbyshops.Model.ModelEndpoint.UserEndpoint;
 import org.nearbyshops.Model.ModelRoles.User;
+import org.nearbyshops.Model.ModelSettings.Market;
 import org.nearbyshops.Model.ModelSettings.MarketSettings;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Utility.SendEmail;
@@ -75,6 +77,11 @@ public class OrderResource {
 
 	@Autowired
 	DAOOrderUtility daoOrderUtility;
+
+
+	@Autowired
+	ServiceConfigurationDAO serviceConfigurationDAO;
+
 
 
 
@@ -136,10 +143,10 @@ public class OrderResource {
 
 
 					MarketSettings marketSettings = marketSettingsDAO.getSettingsInstance();
-
+					Market market = serviceConfigurationDAO.getMarketConfiguration();
 
 					Email emailComposed = EmailBuilder.startingBlank()
-							.from(marketSettings.getEmailSenderName(),appProperties.getEmail_address_for_sender())
+							.from(market.getServiceName(),appProperties.getEmail_address_for_sender())
 							.to(shopAdminProfile.getName(),shopAdminProfile.getEmail())
 							.withSubject("You have received an Order with Order Number :  " + orderId + "")
 							.withHTMLText(htmlText)
@@ -620,10 +627,12 @@ public class OrderResource {
 
 
 
-		User user = userAuthentication.isUserAllowed(request,
+		User userAuthenticated = userAuthentication.isUserAllowed(request,
 				Arrays.asList(Constants.ROLE_END_USER));
 
-		if(user==null)
+
+
+		if(userAuthenticated==null)
 		{
 			return ResponseEntity.status(HttpStatus.FORBIDDEN)
 					.build();
@@ -633,13 +642,13 @@ public class OrderResource {
 
 		if(shopID!=null)
 		{
-			if(user.getRole()== Constants.ROLE_SHOP_ADMIN_CODE)
+			if(userAuthenticated.getRole()== Constants.ROLE_SHOP_ADMIN_CODE)
 			{
-				shopID = daoUserUtility.getShopIDForShopAdmin(user.getUserID());
+				shopID = daoUserUtility.getShopIDForShopAdmin(userAuthenticated.getUserID());
 			}
-			else if(user.getRole()== Constants.ROLE_SHOP_STAFF_CODE)
+			else if(userAuthenticated.getRole()== Constants.ROLE_SHOP_STAFF_CODE)
 			{
-				shopID = daoUserUtility.getShopIDforShopStaff(user.getUserID());
+				shopID = daoUserUtility.getShopIDforShopStaff(userAuthenticated.getUserID());
 			}
 
 		}
@@ -648,18 +657,18 @@ public class OrderResource {
 
 		if(deliveryGuyID!=null)
 		{
-			if(user.getRole()==Constants.ROLE_DELIVERY_GUY_CODE || user.getRole()==Constants.ROLE_DELIVERY_GUY_SELF_CODE)
+			if(userAuthenticated.getRole()==Constants.ROLE_DELIVERY_GUY_CODE || userAuthenticated.getRole()==Constants.ROLE_DELIVERY_GUY_SELF_CODE)
 			{
-				deliveryGuyID = user.getUserID();
+				deliveryGuyID = userAuthenticated.getUserID();
 			}
 		}
 
 
 
 
-		if(user.getRole()==Constants.ROLE_DELIVERY_GUY_SELF_CODE)
+		if(userAuthenticated.getRole()==Constants.ROLE_DELIVERY_GUY_SELF_CODE)
 		{
-			shopID= daoUserUtility.getShopIDforDeliveryPerson(user.getUserID());
+			shopID= daoUserUtility.getShopIDforDeliveryPerson(userAuthenticated.getUserID());
 		}
 
 

@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
+
 <spring:url var="css" value="/resources/css" />
 <!DOCTYPE html>
 <html>
@@ -38,7 +40,7 @@
 			</c:if>
 					function(isConfirm){
 						  if (isConfirm) {
-							window.location.href = "${url}";
+							window.location.href = "${contextRoot}"+"${url}";
 						  }
 						}); });
 						</script>'

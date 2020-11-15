@@ -7,6 +7,8 @@
 <spring:url var="css" value="/resources/css" />
 <spring:url var="js" value="/resources/js" />
 <spring:url var="assets" value="/resources/assets" />
+
+<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +18,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content="" />
 <meta name="author" content="" />
-<title>Login - Nearby Shops</title>
+<title>Login - NearbyShop</title>
 <link href="${css}/styles.css" rel="stylesheet" />
 <link rel="icon" type="image/x-icon" href="${assets }/img/favicon.png" />
 <script data-search-pseudo-elements defer
@@ -57,7 +59,7 @@
 									</c:if>
 
 									<!-- Login form-->
-									<form action="/login" method="post">
+									<form action="${contextRoot}/login" method="post">
 										<!-- Form Group (email address)-->
 										<div class="form-group">
 											<label class="small mb-1" for="inputEmailAddress">Email</label>
