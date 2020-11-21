@@ -1,75 +1,89 @@
-//package org.nearbyshops.WebControllers;
-//
-//import com.google.gson.Gson;
-//import org.json.JSONObject;
-//import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
-//import org.nearbyshops.Model.Shop;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.*;
-//import org.springframework.web.multipart.MultipartFile;
-//import org.springframework.web.servlet.ModelAndView;
-//
-//import javax.servlet.http.HttpSession;
-//import java.io.File;
-//import java.io.IOException;
-//import java.nio.file.Files;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//@Controller
-//public class ShopController {
-//
-//	@Autowired
-//	private HttpSession session;
-//
-//
-//	private ShopEndPoint sep;
-//	private Shop shop;
-//
-//
-//	@RequestMapping("/shops")
-//	public ModelAndView showShops() {
-//
-//		ModelAndView model = new ModelAndView("page");
-//		if (session.getAttribute("token") != null) {
-//			JSONObject obj = jsonObject.getObjectWithToken(apiurl + "/Shop/QuerySimple?Limit=100", "GET",
-//					session.getAttribute("username").toString(), session.getAttribute("token").toString());
-//			sep = gson.fromJson(obj.toString(), ShopEndPoint.class);
-//			model.addObject("userClickShops", true);
-//			model.addObject("shopList", sep.getResults());
-//		} else {
-//			return new ModelAndView("redirect:/home?error=Session Expired");
-//		}
-//
-//
-//		return model;
-//	}
-//
-//
-//
-//
-//	@RequestMapping(value = "/editShop/{id}")
-//	public ModelAndView edit(@PathVariable int id) {
-//
-//		ModelAndView model = new ModelAndView("page");
-//
-//		if (session.getAttribute("token") != null) {
+package org.nearbyshops.WebControllers;
+
+import com.google.gson.Gson;
+import org.json.JSONObject;
+import org.nearbyshops.DAOs.ShopDAO;
+import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
+import org.nearbyshops.Model.Shop;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
+@Controller
+public class ShopController {
+
+	@Autowired
+	private HttpSession session;
+
+	@Autowired
+	ShopDAO shopDAO;
+
+
+	private ShopEndPoint sep;
+	private Shop shop;
+
+
+	@RequestMapping("/shops")
+	public ModelAndView showShops() {
+
+		ModelAndView model = new ModelAndView("page");
+		if (session.getAttribute("token") != null) {
+
+		    ShopEndPoint endPoint = shopDAO.getShopsListQuerySimple(
+                    null,
+                    null,null,
+                    null,null,
+                    null, null,
+                    100,0, false,false
+            );
+
+			model.addObject("userClickShops", true);
+			model.addObject("shopList", endPoint.getResults());
+
+		} else {
+			return new ModelAndView("redirect:/home?error=Session Expired");
+		}
+
+
+		return model;
+	}
+
+
+
+
+	@RequestMapping(value = "/editShop/{id}")
+	public ModelAndView edit(@PathVariable int id) {
+
+		ModelAndView model = new ModelAndView("page");
+
+		if (session.getAttribute("token") != null) {
 //			JSONObject obj = jsonObject.getObjectWithToken(apiurl + "/Shop/GetShopDetails/" + id, "GET",
 //					session.getAttribute("username").toString(), session.getAttribute("token").toString());
 //			shop = gson.fromJson(obj.toString(), Shop.class);
-//			model.addObject("userClickEditShops", true);
+
+            Shop shop = shopDAO.getShopDetails(id,null,null);
+
+			model.addObject("userClickEditShops", true);
 //			model.addObject("imgURL", apiurl + "/Shop/Image");
-//			model.addObject("Shop", shop);
-//		} else {
-//			return new ModelAndView("redirect:/home?error=Session Expired");
-//		}
-//		return model;
-//	}
-//
+			model.addObject("Shop", shop);
+		} else {
+			return new ModelAndView("redirect:/home?error=Session Expired");
+		}
+		return model;
+	}
+
 //
 //
 //	@RequestMapping(value = "/updateShop", method = RequestMethod.POST)
@@ -115,5 +129,5 @@
 //		}
 //		return model;
 //	}
-//
-//}
+
+}

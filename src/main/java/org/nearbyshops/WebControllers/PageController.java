@@ -2,6 +2,7 @@ package org.nearbyshops.WebControllers;
 
 import org.nearbyshops.AppProperties;
 import org.nearbyshops.DAOs.DAORoles.DAOUserNew;
+import org.nearbyshops.DAOs.DAORoles.DAOUserTokens;
 import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.ModelSettings.Market;
@@ -35,6 +36,9 @@ public class PageController {
 
 	@Autowired
 	private DAOUserNew daoUserNew;
+
+	@Autowired
+	private DAOUserTokens daoUserTokens;
 
 
 
@@ -82,35 +86,22 @@ public class PageController {
 		if (session.getAttribute("token") == null) {
 
 
-			String token = new BigInteger(130, Globals.random).toString(32);
-
-			Timestamp timestampExpiry = new Timestamp(System.currentTimeMillis() + appProperties.getToken_duration_minutes()*60*1000);
-
-			User user = new User();
-			user.setUsername(username);
-			user.setPhone(username); // username could be phone number
-			user.setEmail(username); // username could be email
-
-			user.setPassword(password);
-			user.setToken(token);
-			user.setTimestampTokenExpires(timestampExpiry);
-
-			int rowsUpdated = daoUserNew.updateToken(user);
 
 
-			if (rowsUpdated==1) {
+			User userProfile = daoUserTokens.verifyUserSimplePassword(username,password);
+
+			if (userProfile!=null) {
+
+				// user exists
+
+				User userFetched = daoUserNew.checkTokenAndGetProfile(username);
 
 
-
-				User userProfile = daoUserNew.getProfileUsingToken(username,token);
-				userProfile.setToken(token);
-				userProfile.setPassword(null);
-
-				session.setAttribute("username", userProfile.getUsername());
-				session.setAttribute("email", userProfile.getEmail());
-				session.setAttribute("token", token);
-				model.addObject("name", userProfile.getName());
-				model.addObject("token", token);
+				session.setAttribute("username", userFetched.getUsername());
+				session.setAttribute("email", userFetched.getEmail());
+				session.setAttribute("token", userFetched.getToken());
+				model.addObject("name", userFetched.getName());
+				model.addObject("token", userFetched);
 				return new ModelAndView("redirect:/shops");
 
 
@@ -125,6 +116,7 @@ public class PageController {
 			return new ModelAndView("redirect:/shops");
 		}
 	}
+
 
 
 
