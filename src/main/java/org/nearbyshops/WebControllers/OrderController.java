@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 public class OrderController {
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -26,7 +26,7 @@ public class OrderController {
 
 	@RequestMapping("/orders")
 	public ModelAndView showShops() {
-		
+
 		ModelAndView model = new ModelAndView("page");
 		if (session.getAttribute("token") != null) {
 
@@ -46,5 +46,5 @@ public class OrderController {
 		}
 		return model;
 	}
-	
+
 }

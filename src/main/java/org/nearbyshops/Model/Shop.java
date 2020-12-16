@@ -455,6 +455,19 @@ public class Shop {
 		isOpen = open;
 	}
 
+
+	public boolean getIsOpen() {
+		return isOpen;
+	}
+
+
+
+	public void setIsOpen(boolean open) {
+		isOpen = open;
+	}
+
+
+
 	public double getRt_distance() {
 		return rt_distance;
 	}

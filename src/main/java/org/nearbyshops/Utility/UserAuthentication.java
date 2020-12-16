@@ -67,8 +67,9 @@ public class UserAuthentication {
     }
 
 
-    private User isUserAllowed(final String username, final String password, List<String> rolesSet)
+    public User isUserAllowed(final String username, final String password, List<String> rolesSet)
     {
+//        logger.info("Username : " + username + " | Password : " + password);
 
         User user = daoUserToken.verifyUserSimpleToken(username,password);
 

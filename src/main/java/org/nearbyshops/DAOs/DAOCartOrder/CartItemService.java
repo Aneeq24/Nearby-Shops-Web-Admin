@@ -21,6 +21,8 @@ public class CartItemService {
 	DataSource dataSource;
 
 
+
+
 	public int saveCartItem(CartItem cartItem)
 	{	
 		
@@ -211,8 +213,6 @@ public class CartItemService {
 		
 		return rowsCountDeleted;
 	}
-
-
 
 
 
@@ -608,6 +608,8 @@ public class CartItemService {
 
 		return cartItemList;
 	}
+
+
 
 
 	public ArrayList<CartItem> getCartItemAvailabilityByItem(int itemID, int endUserID)

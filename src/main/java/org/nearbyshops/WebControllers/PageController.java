@@ -6,7 +6,6 @@ import org.nearbyshops.DAOs.DAORoles.DAOUserTokens;
 import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.ModelSettings.Market;
-import org.nearbyshops.Utility.Globals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.math.BigInteger;
-import java.sql.Timestamp;
+
+
 
 @Controller
 public class PageController {
@@ -74,8 +73,6 @@ public class PageController {
 
 
 
-
-
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView recoverPass(@RequestParam("username") String username,
 			@RequestParam("password") String password, HttpServletRequest request) {
@@ -97,12 +94,14 @@ public class PageController {
 				User userFetched = daoUserNew.checkTokenAndGetProfile(username);
 
 
-				session.setAttribute("username", userFetched.getUsername());
-				session.setAttribute("email", userFetched.getEmail());
+				session.setAttribute("username", username);
 				session.setAttribute("token", userFetched.getToken());
 				model.addObject("name", userFetched.getName());
-				model.addObject("token", userFetched);
+
 				return new ModelAndView("redirect:/shops");
+
+
+
 
 
 			} else {
@@ -119,8 +118,6 @@ public class PageController {
 
 
 
-
-
 	@RequestMapping("/logout")
 	public ModelAndView logout(HttpServletRequest request) {
 		session = request.getSession(false);
@@ -131,13 +128,14 @@ public class PageController {
 		return new ModelAndView("redirect:/home?logout");
 	}
 
+
+
+
 	@RequestMapping("/underConstruction")
 	public ModelAndView underConstruction() {
 		ModelAndView model = new ModelAndView("page");
 		model.addObject("userPageUnderConstruction", true);
 		return model;
 	}
-
-
 
 }

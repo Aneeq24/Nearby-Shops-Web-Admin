@@ -133,8 +133,10 @@
 <!--			<artifactId>spring-boot-starter-jetty</artifactId>-->
 <!--		</dependency>-->
 
+<!-- Uncomment following two dependencies to  run JSP in this project -->
 
-		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/apache-jsp -->
+
+<!--		 https://mvnrepository.com/artifact/org.eclipse.jetty/apache-jsp-->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>apache-jsp</artifactId>
@@ -142,6 +144,14 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+
+<!-- Uncomment above two dependencies to  run JSP in this project -->
 
 
 		<!-- https://mvnrepository.com/artifact/org.mortbay.jasper/apache-jsp -->
@@ -152,12 +162,6 @@
 <!--		</dependency>-->
 
 
-
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
 
 
 		<dependency>

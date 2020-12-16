@@ -187,7 +187,9 @@ public class ShopDAO {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
+
+
 			try {
 				
 				if(connection!=null)
@@ -798,7 +800,7 @@ public class ShopDAO {
 				+  "count( DISTINCT " + ShopReview.TABLE_NAME + "." + ShopReview.END_USER_ID + ") as rating_count" + ""
 
 				+ " FROM " + Shop.TABLE_NAME
-				+ " INNER JOIN " + User.TABLE_NAME + " ON ( " + Shop.TABLE_NAME + "." + Shop.SHOP_ADMIN_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
+				+ " LEFT OUTER JOIN " + User.TABLE_NAME + " ON ( " + Shop.TABLE_NAME + "." + Shop.SHOP_ADMIN_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
 				+ " LEFT OUTER JOIN " + ShopReview.TABLE_NAME  + " ON (" + ShopReview.TABLE_NAME + "." + ShopReview.SHOP_ID + " = " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + ")"
 				+ " WHERE "	+ Shop.TABLE_NAME + "." + Shop.SHOP_ID + "= " + ShopID;
 
