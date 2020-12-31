@@ -13,7 +13,6 @@ import org.nearbyshops.DAOs.DAORoles.DAOUserUtility;
 import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
 import org.nearbyshops.DAOs.DAOSettings.ServiceConfigurationDAO;
 import org.nearbyshops.Model.ModelBilling.RazorPayOrder;
-import org.nearbyshops.Model.ModelEndpoint.DeliverySlotEndpoint;
 import org.nearbyshops.Model.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
 import org.nearbyshops.Model.ModelEndpoint.UserEndpoint;
@@ -27,6 +26,8 @@ import org.nearbyshops.Utility.SendSMS;
 import org.nearbyshops.Utility.UserAuthentication;
 import org.simplejavamail.email.Email;
 import org.simplejavamail.email.EmailBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -84,6 +85,10 @@ public class OrderResource {
 
 
 
+	Logger logger = LoggerFactory.getLogger(OrderResource.class);
+
+
+
 
 
 	@PostMapping
@@ -105,6 +110,7 @@ public class OrderResource {
 					capturePayment(order.getNetPayable(),razorPayOrder.getRzpPaymentID());
 				}
 			}
+
 
 
 
@@ -361,29 +367,29 @@ public class OrderResource {
 
 
 
-		if(getFilterDeliverySlots)
-		{
+//		if(getFilterDeliverySlots)
+//		{
+//
+//			DeliverySlotEndpoint deliverySlotEndpoint = daoOrderUtility.fetchDeliverySlots(
+//					endUserID,
+//					deliveryMode,
+//					deliveryDate,
+//					false,
+//
+//					null,
+//					homeDeliveryStatus,
+//					shopID,
+//					false,
+//					null,
+//					"order_count desc",
+//					true,false
+//			);
 
-			DeliverySlotEndpoint deliverySlotEndpoint = daoOrderUtility.fetchDeliverySlots(
-					endUserID,
-					deliveryMode,
-					deliveryDate,
-					false,
 
-					null,
-					homeDeliveryStatus,
-					shopID,
-					false,
-					null,
-					"order_count desc",
-					true,false
-			);
+//			endpoint.setDeliverySlotList(deliverySlotEndpoint.getResults());
+//			endpoint.setDeliverySlotCount(deliverySlotEndpoint.getItemCount());
 
-
-			endpoint.setDeliverySlotList(deliverySlotEndpoint.getResults());
-			endpoint.setDeliverySlotCount(deliverySlotEndpoint.getItemCount());
-
-		}
+//		}
 
 
 
@@ -549,29 +555,29 @@ public class OrderResource {
 
 
 
-		if(getFilterDeliverySlots)
-		{
-
-			DeliverySlotEndpoint deliverySlotEndpoint = daoOrderUtility.fetchDeliverySlots(
-					endUserID,
-					deliveryMode,
-					deliveryDate,
-					false,
-
-					null,
-					homeDeliveryStatus,
-					shopID,
-					false,
-					null,
-					"order_count desc",
-					true,false
-			);
-
-
-			endpoint.setDeliverySlotList(deliverySlotEndpoint.getResults());
-			endpoint.setDeliverySlotCount(deliverySlotEndpoint.getItemCount());
-
-		}
+//		if(getFilterDeliverySlots)
+//		{
+//
+//			DeliverySlotEndpoint deliverySlotEndpoint = daoOrderUtility.fetchDeliverySlots(
+//					endUserID,
+//					deliveryMode,
+//					deliveryDate,
+//					false,
+//
+//					null,
+//					homeDeliveryStatus,
+//					shopID,
+//					false,
+//					null,
+//					"order_count desc",
+//					true,false
+//			);
+//
+//
+//			endpoint.setDeliverySlotList(deliverySlotEndpoint.getResults());
+//			endpoint.setDeliverySlotCount(deliverySlotEndpoint.getItemCount());
+//
+//		}
 
 
 
@@ -763,31 +769,31 @@ public class OrderResource {
 
 
 
-
-		if(getFilterDeliverySlots)
-		{
-
-			DeliverySlotEndpoint deliverySlotEndpoint = daoOrderUtility.fetchDeliverySlots(
-					null,
-					deliveryMode,
-					deliveryDate,
-					true,
-					statusHDLessThan,
-					homeDeliveryStatus,
-					shopID,
-
-					deliveryGuyNull,
-					deliveryGuyID,
-					"order_count desc",
-					true,false
-			);
-
-
-
-			endpoint.setDeliverySlotList(deliverySlotEndpoint.getResults());
-			endpoint.setDeliverySlotCount(deliverySlotEndpoint.getItemCount());
-
-		}
+//
+//		if(getFilterDeliverySlots)
+//		{
+//
+//			DeliverySlotEndpoint deliverySlotEndpoint = daoOrderUtility.fetchDeliverySlots(
+//					null,
+//					deliveryMode,
+//					deliveryDate,
+//					true,
+//					statusHDLessThan,
+//					homeDeliveryStatus,
+//					shopID,
+//
+//					deliveryGuyNull,
+//					deliveryGuyID,
+//					"order_count desc",
+//					true,false
+//			);
+//
+//
+//
+//			endpoint.setDeliverySlotList(deliverySlotEndpoint.getResults());
+//			endpoint.setDeliverySlotCount(deliverySlotEndpoint.getItemCount());
+//
+//		}
 
 
 

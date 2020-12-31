@@ -104,7 +104,7 @@
 									<form:input path="phone" class="form-control" id="phone" />
 								</div>
 								<div class="form-group col-md-4">
-									<label class="small mb-1" for="isAccountPrivate">Make
+									<label class="small mb-1" for="accountPrivate">Make
 										Account Private</label>
 									<form:checkbox path="isAccountPrivate" class="form-control" />
 								</div>

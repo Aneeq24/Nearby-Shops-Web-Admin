@@ -15,7 +15,6 @@ import org.nearbyshops.Model.ModelAnalytics.ShopAnalytics;
 import org.nearbyshops.Model.ModelBilling.RazorPayOrder;
 import org.nearbyshops.Model.ModelBilling.Transaction;
 import org.nearbyshops.Model.ModelDelivery.DeliveryAddress;
-import org.nearbyshops.Model.ModelDelivery.DeliverySlot;
 import org.nearbyshops.Model.ModelImages.BannerImage;
 import org.nearbyshops.Model.ModelImages.ItemImage;
 import org.nearbyshops.Model.ModelImages.ShopImage;
@@ -167,7 +166,7 @@ class AppInitialization implements InitializingBean {
         jdbcTemplate.execute(Cart.createTable);
         jdbcTemplate.execute(CartItem.createTable);
         jdbcTemplate.execute(DeliveryAddress.createTable);
-        jdbcTemplate.execute(DeliverySlot.createTable);
+//        jdbcTemplate.execute(DeliverySlot.createTable);
 
         jdbcTemplate.execute(Order.createTable);
         jdbcTemplate.execute(RazorPayOrder.createTable);

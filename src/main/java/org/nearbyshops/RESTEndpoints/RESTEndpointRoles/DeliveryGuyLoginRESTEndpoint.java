@@ -1,10 +1,12 @@
 package org.nearbyshops.RESTEndpoints.RESTEndpointRoles;
 
 
+import org.nearbyshops.AppProperties;
 import org.nearbyshops.Constants;
 import org.nearbyshops.DAOs.DAORoles.DAODeliveryGuy;
 import org.nearbyshops.Model.ModelRoles.DeliveryGuyData;
 import org.nearbyshops.Model.ModelRoles.User;
+import org.nearbyshops.Utility.SendPush;
 import org.nearbyshops.Utility.UserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,10 @@ public class DeliveryGuyLoginRESTEndpoint {
 
     @Autowired
     DAODeliveryGuy daoDeliveryGuy;
+
+
+    @Autowired
+    AppProperties appProperties;
 
 
     @Autowired
@@ -65,6 +71,12 @@ public class DeliveryGuyLoginRESTEndpoint {
 
         if(rowCount >= 1)
         {
+
+            String topic = appProperties.getMarket_id_for_fcm() + Constants.CHANNEL_WITH_DELIVERY_ID + user.getUserID();
+            
+            SendPush.sendFCMPushNotification(topic,null,null,Constants.NOTIFICATION_TYPE_DELIVERY_UPDATES);
+
+
             return ResponseEntity.status(HttpStatus.OK)
                     .build();
         }

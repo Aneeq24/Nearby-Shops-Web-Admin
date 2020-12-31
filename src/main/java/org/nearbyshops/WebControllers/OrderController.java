@@ -1,7 +1,5 @@
 package org.nearbyshops.WebControllers;
 
-import com.google.gson.Gson;
-import org.json.JSONObject;
 import org.nearbyshops.DAOs.DAOOrders.OrderService;
 import org.nearbyshops.Model.ModelEndpoint.OrderEndPoint;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -66,8 +66,7 @@
 										Description</label>
 									<form:input path="itemDescription" class="form-control"
 										id="inputFirstName" />
-									<form:hidden path="itemImageURL" class="form-control"
-										id="itemImageURL" />
+
 								</div>
 							</div>
 							<!-- Form Row        -->

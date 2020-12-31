@@ -5,6 +5,7 @@ import org.nearbyshops.AppProperties;
 import org.nearbyshops.Constants;
 import org.nearbyshops.DAOs.DAOOrders.DAOOrderUtility;
 import org.nearbyshops.DAOs.DAOOrders.OrderItemService;
+import org.nearbyshops.DAOs.DAORoles.DAODeliveryGuy;
 import org.nearbyshops.DAOs.ShopDAO;
 import org.nearbyshops.Model.ModelEndpoint.OrderItemEndPoint;
 import org.nearbyshops.Model.ModelRoles.User;
@@ -43,6 +44,10 @@ public class OrderItemResource {
 
 	@Autowired
 	DAOOrderUtility daoOrderUtility;
+
+
+	@Autowired
+	DAODeliveryGuy daoDeliveryGuy;
 
 	@Autowired
 	ShopDAO shopDAO;
@@ -98,6 +103,8 @@ public class OrderItemResource {
 		}
 
 		endPoint.setOrderDetails(orderDetails);
+
+		endPoint.setDeliveryData(daoDeliveryGuy.getDeliveryGuyData(orderDetails.getDeliveryGuySelfID()));
 
 		endPoint.setShopDetails(shopDAO.getShopDetailsForOrder(orderDetails.getShopID(),latCenter,lonCenter));
 

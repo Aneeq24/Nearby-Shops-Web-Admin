@@ -32,7 +32,7 @@
 						<div class="card-body text-center">
 							<c:if test="${item.itemImageURL != '' }">
 								<img id="blah" class="img-account-profile  mb-2"
-									src="${imgURL}/Item/Image/${item.itemImageURL }" alt="" />
+									src="${imgURL}/${item.itemImageURL }" alt="" />
 							</c:if>
 							<c:if test="${item.itemImageURL == '' }">
 								<img id="blah" class="img-account-profile  mb-2"
@@ -102,18 +102,13 @@
 							<!-- Form Row        -->
 							<div class="form-row">
 								<!-- Form Group (organization name)-->
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-12">
 									<label class="small mb-1" for="listPrice">List Price</label>
 									<form:input path="listPrice" class="form-control"
 										id="listPrice" />
 								</div>
 								<!-- Form Group (location)-->
-								<div class="form-group col-md-6">
-									<label class="small mb-1" for="imageCopyrights">Discounted
-										Price</label>
-									<form:input path="discountedPrice" class="form-control"
-										id="imageCopyrights" />
-								</div>
+
 							</div>
 							<div class="form-group">
 								<label class="small mb-1" for="imageCopyrights">Image

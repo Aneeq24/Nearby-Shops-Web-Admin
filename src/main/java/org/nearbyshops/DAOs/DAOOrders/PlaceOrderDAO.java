@@ -97,7 +97,7 @@ public class PlaceOrderDAO {
 
                 + " " + Order.DELIVERY_OTP + ","
                 + " " + Order.DELIVERY_DATE + ","
-                + " " + Order.DELIVERY_SLOT + ","
+//                + " " + Order.DELIVERY_SLOT + ","
                 + " " + Order.DELIVERY_MODE + ","
                 + " " + Order.PAYMENT_MODE + ""
 
@@ -123,7 +123,7 @@ public class PlaceOrderDAO {
 
                 + " ? " + ","
                 + " ? " + ","
-                + " ? " + ","
+//                + " ? " + ","
                 + " ? " + ","
                 + " ? " + ""
 
@@ -373,14 +373,14 @@ public class PlaceOrderDAO {
             statement.setDate(++i,order.getDeliveryDate());
 
 
-            if(order.getDeliverySlotID()==-1 || order.getDeliverySlotID()==0)
-            {
-                statement.setObject(++i,null);
-            }
-            else
-            {
-                statement.setObject(++i,order.getDeliverySlotID());
-            }
+//            if(order.getDeliverySlotID()==-1 || order.getDeliverySlotID()==0)
+//            {
+//                statement.setObject(++i,null);
+//            }
+//            else
+//            {
+//                statement.setObject(++i,order.getDeliverySlotID());
+//            }
 
 
 

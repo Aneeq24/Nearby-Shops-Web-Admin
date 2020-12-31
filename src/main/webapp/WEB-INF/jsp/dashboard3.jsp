@@ -48,3 +48,9 @@
 	<%@include file="editUser.jsp"%>
 </c:if>
 
+<c:if test="${userClickSales == true }">
+	<%@include file="sales.jsp"%>
+</c:if>
+
+
+

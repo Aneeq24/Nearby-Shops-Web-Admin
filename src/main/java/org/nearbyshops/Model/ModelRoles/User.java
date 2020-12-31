@@ -207,6 +207,11 @@ public class User {
     // Getters and Setters
 
 
+
+    public boolean isIsAccountPrivate() {
+        return isAccountPrivate;
+    }
+
     public int getRt_order_count() {
         return rt_order_count;
     }

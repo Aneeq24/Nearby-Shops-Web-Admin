@@ -31,7 +31,7 @@
 						<thead>
 							<tr>
 								<th>Order ID</th>
-								<th>Shop ID</th>
+								<th>Shop Name</th>
 								<th>Item Count</th>
 								<th>Net Payable</th>
 								<th>Date Time Placed</th>
@@ -40,7 +40,7 @@
 						<tfoot>
 							<tr>
 								<th>Order ID</th>
-								<th>Shop ID</th>
+								<th>Shop Name</th>
 								<th>Item Count</th>
 								<th>Net Payable</th>
 								<th>Date Time Placed</th>

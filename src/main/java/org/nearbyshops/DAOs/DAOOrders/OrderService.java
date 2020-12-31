@@ -9,7 +9,6 @@ import org.nearbyshops.DAOs.DAOSettings.MarketSettingsDAO;
 import org.nearbyshops.Model.ModelBilling.RazorPayOrder;
 import org.nearbyshops.Model.ModelBilling.Transaction;
 import org.nearbyshops.Model.ModelDelivery.DeliveryAddress;
-import org.nearbyshops.Model.ModelDelivery.DeliverySlot;
 import org.nearbyshops.Model.ModelEndpoint.OrderEndPoint;
 import org.nearbyshops.Model.ModelOrderStatus.OrderStatusHomeDelivery;
 import org.nearbyshops.Model.ModelOrderStatus.OrderStatusPickFromShop;
@@ -328,7 +327,7 @@ public class OrderService {
                 + Order.TABLE_NAME + "." + Order.DELIVERY_MODE + ","
                 + Order.TABLE_NAME + "." + Order.DELIVERY_DATE + ","
                 + Order.TABLE_NAME + "." + Order.PAYMENT_MODE + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
 
                 + Shop.TABLE_NAME + "." + Shop.SHOP_NAME + ","
                 + Shop.TABLE_NAME + "." + Shop.SHOP_ADDRESS + ","
@@ -336,7 +335,7 @@ public class OrderService {
 
                 + " FROM " + Order.TABLE_NAME
                 + " LEFT OUTER JOIN " + Shop.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.SHOP_ID + " = " + Shop.TABLE_NAME + "." + Shop.SHOP_ID + ")"
-                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
+//                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
                 + " WHERE TRUE ";
 
 
@@ -433,7 +432,7 @@ public class OrderService {
         query = query
                 + " group by "
                 + Order.TABLE_NAME + "." + Order.ORDER_ID + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
                 + Shop.TABLE_NAME + "." + Shop.SHOP_ID ;
 
 
@@ -505,9 +504,9 @@ public class OrderService {
                     order.setPaymentMode(rs.getInt(Order.PAYMENT_MODE));
 
 
-                    DeliverySlot deliverySlot = new DeliverySlot();
-                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
-                    order.setDeliverySlot(deliverySlot);
+//                    DeliverySlot deliverySlot = new DeliverySlot();
+//                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
+//                    order.setDeliverySlot(deliverySlot);
 
 
                     Shop shop = new Shop();
@@ -621,7 +620,7 @@ public class OrderService {
                 + Order.TABLE_NAME + "." + Order.DELIVERY_MODE + ","
                 + Order.TABLE_NAME + "." + Order.DELIVERY_DATE + ","
                 + Order.TABLE_NAME + "." + Order.PAYMENT_MODE + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
 
 
 
@@ -634,7 +633,7 @@ public class OrderService {
 
                 + " FROM " + Order.TABLE_NAME
                 + " LEFT OUTER JOIN " + DeliveryAddress.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_ADDRESS_ID + " = " + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.ID + ")"
-                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
+//                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
                 + " WHERE TRUE ";
 
 
@@ -733,7 +732,7 @@ public class OrderService {
         query = query
                 + " group by "
                 + Order.TABLE_NAME + "." + Order.ORDER_ID + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
                 + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.ID ;
 
 
@@ -809,10 +808,10 @@ public class OrderService {
 //                    order.setAppServiceCharge(rs.getDouble(Order.APP_SERVICE_CHARGE));
 //                    order.setDeliveryCharges(rs.getDouble(Order.DELIVERY_CHARGES));
 
-                    DeliverySlot deliverySlot = new DeliverySlot();
-                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
-                    order.setDeliverySlot(deliverySlot);
-
+//                    DeliverySlot deliverySlot = new DeliverySlot();
+//                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
+//                    order.setDeliverySlot(deliverySlot);
+//
 
                     DeliveryAddress address = new DeliveryAddress();
                     address.setName(rs.getString(DeliveryAddress.NAME));
@@ -945,7 +944,7 @@ public class OrderService {
                 + Order.TABLE_NAME + "." + Order.DELIVERY_DATE + ","
                 + Order.TABLE_NAME + "." + Order.PAYMENT_MODE + ","
 
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
 
 
                 + Shop.TABLE_NAME + "." + Shop.LAT_CENTER + ","
@@ -972,7 +971,7 @@ public class OrderService {
 
                 + " FROM " + Order.TABLE_NAME
                 + " LEFT OUTER JOIN " + DeliveryAddress.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_ADDRESS_ID + " = " + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.ID + ")"
-                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
+//                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
                 + " LEFT OUTER JOIN " + Shop.TABLE_NAME + " ON (" + Shop.TABLE_NAME + "." + Shop.SHOP_ID + " = " + Order.TABLE_NAME + "." + Order.SHOP_ID + ")"
                 + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
                 + " WHERE " + Order.DELIVERY_MODE + " IN ( " + Order.DELIVERY_MODE_HOME_DELIVERY + " )";
@@ -1073,7 +1072,7 @@ public class OrderService {
         query = query
                 + " group by "
                 + Order.TABLE_NAME + "." + Order.ORDER_ID + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
                 + Shop.TABLE_NAME + "." + Shop.SHOP_ID + ","
                 + User.TABLE_NAME + "." + User.USER_ID + ","
                 + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.ID ;
@@ -1157,9 +1156,9 @@ public class OrderService {
                     order.setRt_pickupDistance(rs.getDouble("pickup_distance"));
 
 
-                    DeliverySlot deliverySlot = new DeliverySlot();
-                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
-                    order.setDeliverySlot(deliverySlot);
+//                    DeliverySlot deliverySlot = new DeliverySlot();
+//                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
+//                    order.setDeliverySlot(deliverySlot);
 
 
                     DeliveryAddress address = new DeliveryAddress();

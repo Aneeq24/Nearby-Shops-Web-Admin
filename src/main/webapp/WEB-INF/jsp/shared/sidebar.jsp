@@ -32,18 +32,33 @@
 							<line x1="3" y1="18" x2="3" y2="18"></line></svg>
 					</div> Items
 				</a>
+
+
+
 				<div class="sidenav-menu-heading">Orders</div>
 
 				<a class="nav-link" href="${contextRoot}/orders">
 					<div class="nav-link-icon">
 						<i class="fas fa-shopping-basket"></i>
 					</div> Order History
-				</a> <a class="nav-link" href="${contextRoot}/underConstruction">
+				</a>
+
+
+				<a class="nav-link" href="${contextRoot}/sales">
+                        <div class="nav-link-icon">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div> Sales Report
+                </a>
+
+
+				<a class="nav-link" href="${contextRoot}/underConstruction">
 					<div class="nav-link-icon">
 						<i class="fas fa-cogs"></i>
 					</div> Market Configuration
 				</a>
+
 				<div class="sidenav-menu-heading">Accounts</div>
+
 				<a class="nav-link" href="${contextRoot}/users">
 					<div class="nav-link-icon">
 						<i class="far fa-user"></i>

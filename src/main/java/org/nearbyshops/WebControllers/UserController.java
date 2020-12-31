@@ -1,12 +1,13 @@
 package org.nearbyshops.WebControllers;
 
 
+import org.nearbyshops.AppProperties;
 import org.nearbyshops.DAOs.DAORoles.DAOUserNew;
 import org.nearbyshops.Model.ModelEndpoint.UserEndpoint;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +21,9 @@ public class UserController {
 
 	@Autowired
 	DAOUserNew daoUserNew;
+
+	@Autowired
+	private AppProperties appProperties;
 
 
 	private UserEndpoint uep;
@@ -53,71 +57,62 @@ public class UserController {
 	}
 
 
+	@RequestMapping(value = "/editUser/{id}")
+	public ModelAndView edit(@PathVariable int id) {
 
-//
-//	@RequestMapping(value = "/editUser/{id}")
-//	public ModelAndView edit(@PathVariable int id) {
-//
-//		ModelAndView model = new ModelAndView("page");
-//
-//		if (session.getAttribute("token") != null) {
-//			JSONObject obj = jsonObject.getObjectWithToken(apiurl + "/User/GetUserDetails/" + id, "GET",
-//					session.getAttribute("email").toString(), session.getAttribute("token").toString());
-//			user = gson.fromJson(obj.toString(), User.class);
-//			model.addObject("userClickEditUser", true);
-//			model.addObject("imgURL", apiurl);
-//			model.addObject("user", user);
-//		} else {
-//			return new ModelAndView("redirect:/home?error=Session Expired");
-//		}
-//		return model;
-//	}
-//
-//	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
-//	public ModelAndView editsave(@ModelAttribute("user") User user) {
-//		ModelAndView model = new ModelAndView("success");
-//		String jsonString = gson.toJson(user).toString();
-//		int response = jsonObject.putUpdateRequest(apiurl + "/User/UpdateProfileByAdmin", jsonString, "PUT",
-//				session.getAttribute("email").toString(), session.getAttribute("token").toString());
-//		model.addObject("response", response);
-//		if (response == 200) {
-//			model.addObject("typeSucess", true);
-//			model.addObject("message", "User Updated Successfully");
-//			model.addObject("url", "/users");
-//		} else {
-//			model.addObject("typeSucess", false);
-//			model.addObject("message", "Something went Wrong");
-//			model.addObject("url", "/editUser/" + user.getUserID());
-//		}
-//		return model;
-//	}
-//
-//	@RequestMapping(value = "/newUser", method = RequestMethod.GET)
-//	public ModelAndView setupForm() {
-//		ModelAndView model = new ModelAndView("page");
-//		User user = new User();
-//		model.addObject("userClickAddUser", true);
-//		model.addObject("user", user);
-//		return model;
-//	}
-//
-//	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-//	public ModelAndView addShop(@ModelAttribute("Shop") Shop shop) {
-//		ModelAndView model = new ModelAndView("success");
-//		String jsonString = gson.toJson(shop).toString();
-//		int response = jsonObject.putUpdateRequest(apiurl + "Shop/UpdateByAdmin/" + shop.getShopID(), jsonString,
-//				"POST", session.getAttribute("email").toString(), session.getAttribute("token").toString());
-//		model.addObject("response", response);
-//		if (response == 201) {
-//			model.addObject("typeSucess", true);
-//			model.addObject("message", "Record Inserted Successfully");
-//			model.addObject("url", "/users");
-//		} else {
-//			model.addObject("typeSucess", false);
-//			model.addObject("message", "Something went Wrong");
-//			model.addObject("url", "/users");
-//		}
-//		return model;
-//	}
+		ModelAndView model = new ModelAndView("page");
+		String imageURL = appProperties.getDomain_name() + "/api/v1/User/Image";
+
+		if (session.getAttribute("token") != null) {
+			user = daoUserNew.getUserDetails(id);
+			model.addObject("userClickEditUser", true);
+			model.addObject("imgURL", imageURL);
+			model.addObject("user", user);
+		} else {
+			return new ModelAndView("redirect:/home?error=Session Expired");
+		}
+		return model;
+	}
+
+
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public ModelAndView editSave(@ModelAttribute("user") User user) {
+		ModelAndView model = new ModelAndView("success");
+		int response = daoUserNew.updateUserByAdmin(user);
+
+		if (response == 1) {
+			model.addObject("typeSucess", true);
+			model.addObject("message", "User Updated Successfully");
+			model.addObject("url", "/users");
+		} else {
+			model.addObject("typeSucess", false);
+			model.addObject("message", "Something went Wrong");
+			model.addObject("url", "/editUser/" + user.getUserID());
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/delete/user/{id}")
+	@ResponseBody
+	public ModelAndView deleteUser( @PathVariable("id") int id) {
+
+		ModelAndView model = new ModelAndView("success");
+		try {
+			int response = daoUserNew.deleteUser(id);
+			model.addObject("responseCode", response);
+			if (response == 1) {
+				model.addObject("typeSucess", true);
+				model.addObject("message", "User Deleted Successfully");
+				model.addObject("url", "/users");
+			} else {
+				model.addObject("typeSucess", false);
+				model.addObject("message", "Something went Wrong");
+				model.addObject("url", "/users");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
 
 }

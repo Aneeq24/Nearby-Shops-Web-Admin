@@ -3,6 +3,7 @@ package org.nearbyshops.DAOs.DAORoles;
 import com.zaxxer.hikari.HikariDataSource;
 import org.nearbyshops.Model.ModelRoles.DeliveryGuyData;
 import org.nearbyshops.Model.ModelRoles.ShopStaffPermissions;
+import org.nearbyshops.Model.ModelRoles.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -100,6 +101,7 @@ public class DAODeliveryGuy {
 	}
 
 
+
 	public int updateDeliveryGuyLocation(DeliveryGuyData data)
 	{
 
@@ -183,7 +185,6 @@ public class DAODeliveryGuy {
 	public DeliveryGuyData getDeliveryGuyData(int userID)
 	{
 
-		boolean isFirst = true;
 
 		String query = "SELECT "
 
@@ -192,9 +193,17 @@ public class DAODeliveryGuy {
 				+ DeliveryGuyData.IS_EMPLOYED_BY_SHOP + ","
 				+ DeliveryGuyData.SHOP_ID + ","
 				+ DeliveryGuyData.CURRENT_BALANCE + ","
+				+ DeliveryGuyData.STAFF_USER_ID + ","
+
+				+ User.USER_ID + ","
+				+ User.PHONE + ","
+				+ User.NAME + ","
+				+ User.PROFILE_IMAGE_URL + ""
 
 				+ " FROM "  + DeliveryGuyData.TABLE_NAME
+				+ " INNER JOIN "  + User.TABLE_NAME + " ON ( " + DeliveryGuyData.STAFF_USER_ID + " = " + User.USER_ID + " ) "
 				+ " WHERE " + DeliveryGuyData.STAFF_USER_ID  + " = ? ";
+
 
 
 
@@ -205,6 +214,7 @@ public class DAODeliveryGuy {
 
 		//Distributor distributor = null;
 		DeliveryGuyData deliveryGuyData = null;
+
 
 		try {
 
@@ -228,8 +238,16 @@ public class DAODeliveryGuy {
 				deliveryGuyData.setEmployedByShop(rs.getBoolean(DeliveryGuyData.IS_EMPLOYED_BY_SHOP));
 				deliveryGuyData.setShopID(rs.getInt(DeliveryGuyData.SHOP_ID));
 				deliveryGuyData.setCurrentBalance(rs.getDouble(DeliveryGuyData.CURRENT_BALANCE));
+				deliveryGuyData.setStaffUserID(rs.getInt(DeliveryGuyData.STAFF_USER_ID));
 
-				deliveryGuyData.setStaffUserID(rs.getInt(ShopStaffPermissions.STAFF_ID));
+
+				User user = new User();
+				user.setUserID(rs.getInt(User.USER_ID));
+				user.setPhone(rs.getString(User.PHONE));
+				user.setName(rs.getString(User.NAME));
+				user.setProfileImagePath(rs.getString(User.PROFILE_IMAGE_URL));
+
+				deliveryGuyData.setDeliveryGuyProfile(user);
 
 			}
 

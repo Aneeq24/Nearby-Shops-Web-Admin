@@ -59,12 +59,21 @@ public class DeliveryGuyData {
     private double currentBalance;
     private double rt_distance;
 
+    private User deliveryGuyProfile;
 
 
 
 
     // getter and setters
 
+
+    public User getDeliveryGuyProfile() {
+        return deliveryGuyProfile;
+    }
+
+    public void setDeliveryGuyProfile(User deliveryGuyProfile) {
+        this.deliveryGuyProfile = deliveryGuyProfile;
+    }
 
     public double getRt_distance() {
         return rt_distance;

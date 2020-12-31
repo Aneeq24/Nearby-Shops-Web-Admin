@@ -1,4 +1,4 @@
-package org.nearbyshops.Model.ModelEndpoint;
+package org.nearbyshops.Model.ModelDelivery;
 
 import org.nearbyshops.Model.Item;
 import org.nearbyshops.Model.ItemCategory;

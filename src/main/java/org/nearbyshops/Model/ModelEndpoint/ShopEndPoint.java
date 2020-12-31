@@ -2,6 +2,7 @@ package org.nearbyshops.Model.ModelEndpoint;
 
 import org.nearbyshops.Model.ItemCategory;
 import org.nearbyshops.Model.ModelImages.BannerImage;
+import org.nearbyshops.Model.ModelSalesReport.OrderSalesStats;
 import org.nearbyshops.Model.Shop;
 
 import java.util.ArrayList;
@@ -20,7 +21,18 @@ public class ShopEndPoint {
 
     private List<ItemCategory> subcategories;
     private List<BannerImage> bannerImages;
+    private List<OrderSalesStats> orderSalesStatsList;
 
+
+
+
+    public List<OrderSalesStats> getOrderSalesStatsList() {
+        return orderSalesStatsList;
+    }
+
+    public void setOrderSalesStatsList(List<OrderSalesStats> orderSalesStatsList) {
+        this.orderSalesStatsList = orderSalesStatsList;
+    }
 
     public List<BannerImage> getBannerImages() {
         return bannerImages;

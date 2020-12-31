@@ -2,7 +2,6 @@ package org.nearbyshops.Model;
 
 import org.nearbyshops.Model.ModelBilling.RazorPayOrder;
 import org.nearbyshops.Model.ModelDelivery.DeliveryAddress;
-import org.nearbyshops.Model.ModelDelivery.DeliverySlot;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.ModelStats.OrderStats;
 
@@ -114,13 +113,13 @@ public class Order {
             + " " + Order.STATUS_PICK_FROM_SHOP + " int not null default 0,"
 
             + " " + Order.DELIVERY_DATE + " date,"
-            + " " + Order.DELIVERY_SLOT + " int,"
+//            + " " + Order.DELIVERY_SLOT + " int,"
 
             + " " + Order.DELIVERY_MODE + " int not null default 1,"
             + " " + Order.PAYMENT_MODE + " int not null default 1,"
 
 
-            + " FOREIGN KEY(" + Order.DELIVERY_SLOT +") REFERENCES " + DeliverySlot.TABLE_NAME + "(" + DeliverySlot.SLOT_ID + ") ON DELETE SET NULL,"
+//            + " FOREIGN KEY(" + Order.DELIVERY_SLOT +") REFERENCES " + DeliverySlot.TABLE_NAME + "(" + DeliverySlot.SLOT_ID + ") ON DELETE SET NULL,"
             + " FOREIGN KEY(" + Order.END_USER_ID +") REFERENCES " + User.TABLE_NAME + "(" + User.USER_ID + ") ON DELETE SET NULL,"
             + " FOREIGN KEY(" + Order.SHOP_ID +") REFERENCES " + Shop.TABLE_NAME + "(" + Shop.SHOP_ID + ") ON DELETE SET NULL,"
             + " FOREIGN KEY(" + Order.DELIVERY_ADDRESS_ID +") REFERENCES " + DeliveryAddress.TABLE_NAME + "(" + DeliveryAddress.ID + ") ON DELETE SET NULL,"
@@ -140,7 +139,7 @@ public class Order {
             " ALTER TABLE IF EXISTS " + Order.TABLE_NAME
             + "  ADD COLUMN IF NOT EXISTS  " + Order.SAVINGS_OVER_MRP + "  float NOT NULL default 0,"
             + "  ADD COLUMN IF NOT EXISTS  " + Order.DELIVERY_DATE + "  date,"
-            + "  ADD COLUMN IF NOT EXISTS  " + Order.DELIVERY_SLOT + "  int,"
+//            + "  ADD COLUMN IF NOT EXISTS  " + Order.DELIVERY_SLOT + "  int,"
             + "  ADD COLUMN IF NOT EXISTS  " + Order.DELIVERY_MODE + "  int not null default 1,"
             + "  ADD COLUMN IF NOT EXISTS  " + Order.PAYMENT_MODE + "  int not null default 1";
 
@@ -226,7 +225,7 @@ public class Order {
 
 
     private RazorPayOrder razorPayOrder;
-    private DeliverySlot deliverySlot;
+//    private DeliverySlot deliverySlot;
 
 
 
@@ -274,14 +273,6 @@ public class Order {
 
     public void setRt_pickupDistance(double rt_pickupDistance) {
         this.rt_pickupDistance = rt_pickupDistance;
-    }
-
-    public DeliverySlot getDeliverySlot() {
-        return deliverySlot;
-    }
-
-    public void setDeliverySlot(DeliverySlot deliverySlot) {
-        this.deliverySlot = deliverySlot;
     }
 
     public Date getDeliveryDate() {

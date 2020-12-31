@@ -1,6 +1,5 @@
 package org.nearbyshops.Model.ModelEndpoint;
 
-import org.nearbyshops.Model.ModelDelivery.DeliverySlot;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.Shop;
@@ -18,7 +17,7 @@ public class OrderEndPoint {
     private int max_limit;
     private List<Order> results;
 
-    private List<DeliverySlot> deliverySlotList;
+//    private List<DeliverySlot> deliverySlotList;
     private List<Shop> shopList;
     private List<User> deliveryPersonList;
 
@@ -71,13 +70,6 @@ public class OrderEndPoint {
         this.max_limit = max_limit;
     }
 
-    public List<DeliverySlot> getDeliverySlotList() {
-        return deliverySlotList;
-    }
-
-    public void setDeliverySlotList(List<DeliverySlot> deliverySlotList) {
-        this.deliverySlotList = deliverySlotList;
-    }
 
     public List<Shop> getShopList() {
         return shopList;

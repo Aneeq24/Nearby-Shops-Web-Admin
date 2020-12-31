@@ -1,5 +1,7 @@
 package org.nearbyshops.Model.ModelEndpoint;
 
+import org.nearbyshops.Model.ModelRoles.DeliveryGuyData;
+import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.OrderItem;
 import org.nearbyshops.Model.Shop;
@@ -18,7 +20,15 @@ public class OrderItemEndPoint {
     private List<OrderItem> results;
     private Shop shopDetails;
     private Order orderDetails;
+    private DeliveryGuyData deliveryData;
 
+    public DeliveryGuyData getDeliveryData() {
+        return deliveryData;
+    }
+
+    public void setDeliveryData(DeliveryGuyData deliveryData) {
+        this.deliveryData = deliveryData;
+    }
 
     public Order getOrderDetails() {
         return orderDetails;

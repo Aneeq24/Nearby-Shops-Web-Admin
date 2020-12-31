@@ -35,7 +35,7 @@
 							
 								<c:if test="${category.imagePath != null }">
 									<img id="blah" class="img-account-profile mb-2"
-										src="${imgURL}/ItemCategory/Image/${category.imagePath }"
+										src="${imgURL}/${category.imagePath }"
 										alt="" />
 								</c:if>
 								<c:if test="${category.imagePath == null }">

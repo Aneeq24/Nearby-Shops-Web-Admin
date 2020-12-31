@@ -33,6 +33,7 @@ public class Constants {
 
 
 
+    public static final String NOTIFICATION_TYPE_DELIVERY_UPDATES = "NOTIFICATION_TYPE_DELIVERY_UPDATES";
     public static final String NOTIFICATION_TYPE_SHOP_CREATED = "NOTIFICATION_TYPE_SHOP_CREATED";
     public static final String NOTIFICATION_TYPE_ORDER_RECEIVED = "NOTIFICATION_TYPE_ORDER_RECEIVED";
     public static final String NOTIFICATION_TYPE_ORDER_PACKED = "NOTIFICATION_TYPE_ORDER_PACKED";
@@ -49,6 +50,8 @@ public class Constants {
 
     public static final String CHANNEL_SHOP_WITH_SHOP_ID = "shop_";
     public static final String CHANNEL_END_USER_WITH_USER_ID = "end_user_";
+    public static final String CHANNEL_WITH_DELIVERY_ID = "delivery_";
+
 
 
 

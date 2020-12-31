@@ -32,8 +32,6 @@ import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.ModelStats.ShopStats;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.Shop;
-import org.nearbyshops.Utility.SendPush;
-import org.nearbyshops.Utility.SendSMS;
 import org.nearbyshops.Utility.UserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -894,7 +892,6 @@ public class ShopResource {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(endPoint);
 	}
-
 
 
 

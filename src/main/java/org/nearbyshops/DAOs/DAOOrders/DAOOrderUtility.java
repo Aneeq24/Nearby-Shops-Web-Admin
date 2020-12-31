@@ -1,10 +1,9 @@
 package org.nearbyshops.DAOs.DAOOrders;
 
 import org.nearbyshops.Model.ModelDelivery.DeliveryAddress;
-import org.nearbyshops.Model.ModelDelivery.DeliverySlot;
-import org.nearbyshops.Model.ModelEndpoint.DeliverySlotEndpoint;
 import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
 import org.nearbyshops.Model.ModelEndpoint.UserEndpoint;
+import org.nearbyshops.Model.ModelRoles.DeliveryGuyData;
 import org.nearbyshops.Model.ModelRoles.User;
 import org.nearbyshops.Model.Order;
 import org.nearbyshops.Model.Shop;
@@ -137,9 +136,12 @@ public class DAOOrderUtility {
                     + Order.TABLE_NAME + "." + Order.PAYMENT_MODE + ","
                     + Order.TABLE_NAME + "." + Order.DELIVERY_OTP + ","
                     + Order.TABLE_NAME + "." + Order.END_USER_ID + ","
+                    + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + ","
 
 
                     + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.NAME + ","
+                    + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.LATITUDE + ","
+                    + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.LONGITUDE + ","
                     + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.PHONE_NUMBER + ","
                     + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.DELIVERY_ADDRESS + ","
                     + DeliveryAddress.TABLE_NAME + "." + DeliveryAddress.CITY + ","
@@ -186,10 +188,13 @@ public class DAOOrderUtility {
                 order.setPaymentMode(rs.getInt(Order.PAYMENT_MODE));
                 order.setDeliveryOTP(rs.getInt(Order.DELIVERY_OTP));
                 order.setEndUserID(rs.getInt(Order.END_USER_ID));
+                order.setDeliveryGuySelfID(rs.getInt(Order.DELIVERY_GUY_SELF_ID));
 
 
                 DeliveryAddress address = new DeliveryAddress();
                 address.setName(rs.getString(DeliveryAddress.NAME));
+                address.setLatitude(rs.getDouble(DeliveryAddress.LATITUDE));
+                address.setLongitude(rs.getDouble(DeliveryAddress.LONGITUDE));
                 address.setPhoneNumber(rs.getLong(DeliveryAddress.PHONE_NUMBER));
                 address.setDeliveryAddress(rs.getString(DeliveryAddress.DELIVERY_ADDRESS));
                 address.setCity(rs.getString(DeliveryAddress.CITY));
@@ -431,7 +436,7 @@ public class DAOOrderUtility {
 
                 + " FROM " + Order.TABLE_NAME
                 + " INNER JOIN " + User.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
-                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
+//                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
                 + " LEFT OUTER JOIN " + Shop.TABLE_NAME + " ON (" + Shop.TABLE_NAME + "." + Shop.SHOP_ID + " = " + Order.TABLE_NAME + "." + Order.SHOP_ID + ")"
                 + " WHERE " + Order.DELIVERY_MODE + " IN ( " + Order.DELIVERY_MODE_HOME_DELIVERY + " )";
 //        + " WHERE " + Order.DELIVERY_MODE + " IN ( " + Order.DELIVERY_MODE_DELIVERY_BY_MARKET + " , " + Order.DELIVERY_MODE_DELIVERY_BY_VENDOR + " )";
@@ -675,7 +680,7 @@ public class DAOOrderUtility {
                 + " FROM " + Order.TABLE_NAME
                 + " INNER JOIN " + Shop.TABLE_NAME + " ON (" + Shop.TABLE_NAME + "." + Shop.SHOP_ID + " = " + Order.TABLE_NAME + "." + Order.SHOP_ID + ")"
                 + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
-                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
+//                + " LEFT OUTER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
                 + " WHERE TRUE " ;
 
 
@@ -900,265 +905,265 @@ public class DAOOrderUtility {
 
 
 
-
-    // fetch shops for the delivery inventory
-    public DeliverySlotEndpoint fetchDeliverySlots(
-            Integer endUserID,
-
-            Integer deliveryMode,
-            Date deliveryDate,
-
-
-            boolean areDeliveryOrders,
-
-            Integer statusHDLessThan,
-            Integer homeDeliveryStatus,
-            Integer shopID,
-
-            boolean deliveryGuyNull,
-            Integer deliveryGuyID,
-
-            String sortBy,
-            boolean getRowCount,
-            boolean getOnlyMetadata
-    )
-    {
-
-        String queryCount = "";
-
-        String query = "SELECT "
-
-                + " count ( " + Order.TABLE_NAME + "." + Order.ORDER_ID + " ) as order_count ,"
-
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_START_TIME + ","
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.DURATION_IN_HOURS + ""
-
-                + " FROM " + Order.TABLE_NAME
-                + " INNER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
-                + " LEFT OUTER JOIN " + Shop.TABLE_NAME + " ON (" + Shop.TABLE_NAME + "." + Shop.SHOP_ID + " = " + Order.TABLE_NAME + "." + Order.SHOP_ID + ")"
-                + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
-                + " WHERE TRUE ";
-
-
-
-        if(areDeliveryOrders)
-        {
-            query = query + " AND " + Order.DELIVERY_MODE + " IN ( " + Order.DELIVERY_MODE_HOME_DELIVERY + " )";
-//            query = query + " AND " + Order.DELIVERY_MODE + " IN ( " + Order.DELIVERY_MODE_DELIVERY_BY_MARKET + " , " + Order.DELIVERY_MODE_DELIVERY_BY_VENDOR + " )";
-        }
-
-
-
-        if(shopID != null)
-        {
-            query = query + " AND " + Order.TABLE_NAME + "." + Order.SHOP_ID + " = " + shopID;
-        }
-
-
-        if(endUserID != null)
-        {
-            query = query + " AND " + Order.END_USER_ID + " = " + endUserID;
-        }
-
-
-
-        if(deliveryMode != null)
-        {
-            query = query + " AND " + Order.DELIVERY_MODE + " = " + deliveryMode;
-        }
-
-
-
-        if(deliveryDate != null)
-        {
-            query = query + " AND " + Order.DELIVERY_DATE + " = ? ";
-        }
-
-
-
-
-
-
-
-        if(deliveryGuyID != null)
-        {
-            query = query + " AND " + User.USER_ID + " = " + deliveryGuyID;
-        }
-
-
-
-        if(deliveryGuyNull)
-        {
-            query = query + " AND " + Order.DELIVERY_GUY_SELF_ID + " IS NULL ";
-        }
-
-
-
-        if(homeDeliveryStatus != null)
-        {
-
-            query = query + " AND " + Order.STATUS_HOME_DELIVERY + " = " + homeDeliveryStatus;
-        }
-
-
-        if(statusHDLessThan != null)
-        {
-            query = query + " AND " + Order.STATUS_HOME_DELIVERY + " <= " + statusHDLessThan;
-        }
-
-
-
-
-
-
-        // all the non-aggregate columns which are present in select must be present in group by also.
-        query = query
-                + " group by "
-                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID ;
-
-
-        queryCount = query;
-
-
-
-
-
-        if(sortBy!=null)
-        {
-            if(!sortBy.equals(""))
-            {
-                String queryPartSortBy = " ORDER BY " + sortBy;
-
-                query = query + queryPartSortBy;
-            }
-        }
-
-
-
-
-
-        queryCount = "SELECT COUNT(*) as item_count FROM (" + queryCount + ") AS temp";
-
-
-
-
-        DeliverySlotEndpoint endPoint = new DeliverySlotEndpoint();
-
-
-        ArrayList<DeliverySlot> slotList = new ArrayList<>();
-        Connection connection = null;
-
-
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-
-
-
-        try {
-
-            connection = dataSource.getConnection();
-
-            int i = 0;
-
-
-            if(!getOnlyMetadata) {
-
-
-                statement = connection.prepareStatement(query);
-
-                if(deliveryDate!=null)
-                {
-                    statement.setObject(++i,deliveryDate);
-                }
-
-                rs = statement.executeQuery();
-
-                while (rs.next()) {
-
-
-                    DeliverySlot deliverySlot = new DeliverySlot();
-
-                    deliverySlot.setSlotID(rs.getInt(DeliverySlot.SLOT_ID));
-                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
-                    deliverySlot.setSlotTime(rs.getTime(DeliverySlot.SLOT_START_TIME));
-                    deliverySlot.setDurationInHours(rs.getInt(DeliverySlot.DURATION_IN_HOURS));
-                    deliverySlot.setRt_order_count(rs.getInt("order_count"));
-
-                    slotList.add(deliverySlot);
-                }
-
-
-                endPoint.setResults(slotList);
-            }
-
-
-
-            if(getRowCount)
-            {
-                statement = connection.prepareStatement(queryCount);
-
-                i = 0;
-
-
-                if(deliveryDate!=null)
-                {
-                    statement.setObject(++i,deliveryDate);
-                }
-
-                rs = statement.executeQuery();
-
-                while(rs.next())
-                {
-//                    System.out.println("Item Count : " + String.valueOf(endPoint.getItemCount()));
-                    endPoint.setItemCount(rs.getInt("item_count"));
-                }
-            }
-
-
-
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-
-        finally
-
-        {
-
-            try {
-                if(rs!=null)
-                {rs.close();}
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            try {
-
-                if(statement!=null)
-                {statement.close();}
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-
-            try {
-
-                if(connection!=null)
-                {connection.close();}
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-
-        return endPoint;
-    }
-
+//
+//    // fetch shops for the delivery inventory
+//    public DeliverySlotEndpoint fetchDeliverySlots(
+//            Integer endUserID,
+//
+//            Integer deliveryMode,
+//            Date deliveryDate,
+//
+//
+//            boolean areDeliveryOrders,
+//
+//            Integer statusHDLessThan,
+//            Integer homeDeliveryStatus,
+//            Integer shopID,
+//
+//            boolean deliveryGuyNull,
+//            Integer deliveryGuyID,
+//
+//            String sortBy,
+//            boolean getRowCount,
+//            boolean getOnlyMetadata
+//    )
+//    {
+//
+//        String queryCount = "";
+//
+//        String query = "SELECT "
+//
+//                + " count ( " + Order.TABLE_NAME + "." + Order.ORDER_ID + " ) as order_count ,"
+//
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_NAME + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_START_TIME + ","
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.DURATION_IN_HOURS + ""
+//
+//                + " FROM " + Order.TABLE_NAME
+//                + " INNER JOIN " + DeliverySlot.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_SLOT + " = " + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID + ")"
+//                + " LEFT OUTER JOIN " + Shop.TABLE_NAME + " ON (" + Shop.TABLE_NAME + "." + Shop.SHOP_ID + " = " + Order.TABLE_NAME + "." + Order.SHOP_ID + ")"
+//                + " LEFT OUTER JOIN " + User.TABLE_NAME + " ON (" + Order.TABLE_NAME + "." + Order.DELIVERY_GUY_SELF_ID + " = " + User.TABLE_NAME + "." + User.USER_ID + ")"
+//                + " WHERE TRUE ";
+//
+//
+//
+//        if(areDeliveryOrders)
+//        {
+//            query = query + " AND " + Order.DELIVERY_MODE + " IN ( " + Order.DELIVERY_MODE_HOME_DELIVERY + " )";
+////            query = query + " AND " + Order.DELIVERY_MODE + " IN ( " + Order.DELIVERY_MODE_DELIVERY_BY_MARKET + " , " + Order.DELIVERY_MODE_DELIVERY_BY_VENDOR + " )";
+//        }
+//
+//
+//
+//        if(shopID != null)
+//        {
+//            query = query + " AND " + Order.TABLE_NAME + "." + Order.SHOP_ID + " = " + shopID;
+//        }
+//
+//
+//        if(endUserID != null)
+//        {
+//            query = query + " AND " + Order.END_USER_ID + " = " + endUserID;
+//        }
+//
+//
+//
+//        if(deliveryMode != null)
+//        {
+//            query = query + " AND " + Order.DELIVERY_MODE + " = " + deliveryMode;
+//        }
+//
+//
+//
+//        if(deliveryDate != null)
+//        {
+//            query = query + " AND " + Order.DELIVERY_DATE + " = ? ";
+//        }
+//
+//
+//
+//
+//
+//
+//
+//        if(deliveryGuyID != null)
+//        {
+//            query = query + " AND " + User.USER_ID + " = " + deliveryGuyID;
+//        }
+//
+//
+//
+//        if(deliveryGuyNull)
+//        {
+//            query = query + " AND " + Order.DELIVERY_GUY_SELF_ID + " IS NULL ";
+//        }
+//
+//
+//
+//        if(homeDeliveryStatus != null)
+//        {
+//
+//            query = query + " AND " + Order.STATUS_HOME_DELIVERY + " = " + homeDeliveryStatus;
+//        }
+//
+//
+//        if(statusHDLessThan != null)
+//        {
+//            query = query + " AND " + Order.STATUS_HOME_DELIVERY + " <= " + statusHDLessThan;
+//        }
+//
+//
+//
+//
+//
+//
+//        // all the non-aggregate columns which are present in select must be present in group by also.
+//        query = query
+//                + " group by "
+//                + DeliverySlot.TABLE_NAME + "." + DeliverySlot.SLOT_ID ;
+//
+//
+//        queryCount = query;
+//
+//
+//
+//
+//
+//        if(sortBy!=null)
+//        {
+//            if(!sortBy.equals(""))
+//            {
+//                String queryPartSortBy = " ORDER BY " + sortBy;
+//
+//                query = query + queryPartSortBy;
+//            }
+//        }
+//
+//
+//
+//
+//
+//        queryCount = "SELECT COUNT(*) as item_count FROM (" + queryCount + ") AS temp";
+//
+//
+//
+//
+//        DeliverySlotEndpoint endPoint = new DeliverySlotEndpoint();
+//
+//
+//        ArrayList<DeliverySlot> slotList = new ArrayList<>();
+//        Connection connection = null;
+//
+//
+//        PreparedStatement statement = null;
+//        ResultSet rs = null;
+//
+//
+//
+//        try {
+//
+//            connection = dataSource.getConnection();
+//
+//            int i = 0;
+//
+//
+//            if(!getOnlyMetadata) {
+//
+//
+//                statement = connection.prepareStatement(query);
+//
+//                if(deliveryDate!=null)
+//                {
+//                    statement.setObject(++i,deliveryDate);
+//                }
+//
+//                rs = statement.executeQuery();
+//
+//                while (rs.next()) {
+//
+//
+//                    DeliverySlot deliverySlot = new DeliverySlot();
+//
+//                    deliverySlot.setSlotID(rs.getInt(DeliverySlot.SLOT_ID));
+//                    deliverySlot.setSlotName(rs.getString(DeliverySlot.SLOT_NAME));
+//                    deliverySlot.setSlotTime(rs.getTime(DeliverySlot.SLOT_START_TIME));
+//                    deliverySlot.setDurationInHours(rs.getInt(DeliverySlot.DURATION_IN_HOURS));
+//                    deliverySlot.setRt_order_count(rs.getInt("order_count"));
+//
+//                    slotList.add(deliverySlot);
+//                }
+//
+//
+//                endPoint.setResults(slotList);
+//            }
+//
+//
+//
+//            if(getRowCount)
+//            {
+//                statement = connection.prepareStatement(queryCount);
+//
+//                i = 0;
+//
+//
+//                if(deliveryDate!=null)
+//                {
+//                    statement.setObject(++i,deliveryDate);
+//                }
+//
+//                rs = statement.executeQuery();
+//
+//                while(rs.next())
+//                {
+////                    System.out.println("Item Count : " + String.valueOf(endPoint.getItemCount()));
+//                    endPoint.setItemCount(rs.getInt("item_count"));
+//                }
+//            }
+//
+//
+//
+//        } catch (SQLException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//
+//        finally
+//
+//        {
+//
+//            try {
+//                if(rs!=null)
+//                {rs.close();}
+//            } catch (SQLException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//
+//                if(statement!=null)
+//                {statement.close();}
+//            } catch (SQLException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//
+//            try {
+//
+//                if(connection!=null)
+//                {connection.close();}
+//            } catch (SQLException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//            }
+//        }
+//
+//
+//        return endPoint;
+//    }
+//
 
 
 

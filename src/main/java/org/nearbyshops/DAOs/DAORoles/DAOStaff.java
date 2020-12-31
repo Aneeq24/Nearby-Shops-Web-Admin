@@ -2,6 +2,7 @@ package org.nearbyshops.DAOs.DAORoles;
 
 
 import org.nearbyshops.Constants;
+import org.nearbyshops.Model.ModelRoles.DeliveryGuyData;
 import org.nearbyshops.Model.ModelRoles.ShopStaffPermissions;
 import org.nearbyshops.Model.ModelRoles.StaffPermissions;
 import org.nearbyshops.Model.ModelRoles.User;
@@ -141,6 +142,14 @@ public class DAOStaff {
 
 
 
+        String insertDeliveryData = "INSERT INTO " + DeliveryGuyData.TABLE_NAME
+                + "("
+                + DeliveryGuyData.STAFF_USER_ID + ""
+                + ") values(?)"
+                + " ON CONFLICT DO NOTHING ";
+
+
+
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -166,12 +175,27 @@ public class DAOStaff {
             rowCountUpdated = statement.executeUpdate();
 
 
+            if(role==Constants.ROLE_STAFF_CODE)
+            {
 
-            statement = connection.prepareStatement(insertPermissions,PreparedStatement.RETURN_GENERATED_KEYS);
-            i = 0;
+                statement = connection.prepareStatement(insertPermissions,PreparedStatement.RETURN_GENERATED_KEYS);
+                i = 0;
 
-            statement.setObject(++i,userID);
-            statement.executeUpdate();
+                statement.setObject(++i,userID);
+                statement.executeUpdate();
+
+
+            }
+            else if(role==Constants.ROLE_DELIVERY_GUY_CODE)
+            {
+                statement = connection.prepareStatement(insertDeliveryData,PreparedStatement.RETURN_GENERATED_KEYS);
+                i = 0;
+
+                statement.setObject(++i,userID);
+                statement.executeUpdate();
+            }
+
+
 
 
 
