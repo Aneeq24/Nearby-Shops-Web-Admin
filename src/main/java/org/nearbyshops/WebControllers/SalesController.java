@@ -2,7 +2,6 @@ package org.nearbyshops.WebControllers;
 
 import org.nearbyshops.DAOs.DAOSalesReport;
 import org.nearbyshops.Model.ModelEndpoint.ShopEndPoint;
-import org.nearbyshops.Model.ModelSalesReport.OrderSalesStats;
 import org.nearbyshops.Utility.UserAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,17 +75,21 @@ public class SalesController {
         }
 
 
-//        logger.info("Start Date : " + startDate + " | " + " End Date : " + endDate);
+        logger.info("Start Date : " + startDate + " | " + " End Date : " + endDate);
 
 
-        logger.info("Total Sales : " + salesDAO.getTotalSales());
+        /*logger.info("Total Sales : " + salesDAO.getTotalSales());
         logger.info("Order Count : " + salesDAO.getOrderCount());
         logger.info("Vendor Count : " + salesDAO.getVendorCount());
-        logger.info("User Count : " + salesDAO.getUserCount());
+        logger.info("User Count : " + salesDAO.getUserCount());*/
 
         ModelAndView model = new ModelAndView("page");
 
         model.addObject("userClickSales", true);
+        model.addObject("totalSales", salesDAO.getTotalSales());
+        model.addObject("orderCount", salesDAO.getOrderCount());
+        model.addObject("vendorCount", salesDAO.getVendorCount());
+        model.addObject("userCount", salesDAO.getUserCount());
         model.addObject("salesList", salesDAO.getShopSales(sDate,eDate, null," total_order_sales DESC ",100,0,true,false).getOrderSalesStatsList());
 
 

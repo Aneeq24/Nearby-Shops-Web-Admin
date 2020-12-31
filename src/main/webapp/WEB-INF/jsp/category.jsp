@@ -69,7 +69,7 @@
 															stroke-linecap="round" stroke-linejoin="round"
 															class="feather feather-edit-2">
 															<polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
-												</a> <a href="${contextRoot}/delete/inCategory/${city.parentCategoryID }/category/${city.itemCategoryID}"
+												</a> <%--<a href="${contextRoot}/delete/inCategory/${city.parentCategoryID}/category/${city.itemCategoryID}"
 													class="btn btn-datatable btn-icon btn-transparent-dark">
 														<svg xmlns="http://www.w3.org/2000/svg" width="24"
 															height="24" viewBox="0 0 24 24" fill="none"
@@ -81,13 +81,24 @@
 																d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 															<line x1="10" y1="11" x2="10" y2="17"></line>
 															<line x1="14" y1="11" x2="14" y2="17"></line></svg>
-												</a></td>
+												</a>--%>
+												<button class="btn btn-datatable btn-icon btn-transparent-dark" onClick="$(this).MessageBox(${city.parentCategoryID},${city.itemCategoryID},'category');" >
+                                                												    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                                                    		height="24" viewBox="0 0 24 24" fill="none"
+                                                                                                    		stroke="currentColor" stroke-width="2"
+                                                                                                    	    stroke-linecap="round" stroke-linejoin="round"
+                                                                                                    		class="feather feather-trash-2">
+                                                                                                    		<polyline points="3 6 5 6 21 6"></polyline>
+                                                                                                    		<path
+                                                                                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                                                    		<line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                                                    		<line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                												</button>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
-
-
 
 							</div>
 						</div>
@@ -130,7 +141,7 @@
 															stroke-linecap="round" stroke-linejoin="round"
 															class="feather feather-edit-2">
 															<polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon></svg>
-												</a> <a href="${contextRoot}/delete/inCategory/${city.itemCategoryID}/item/${city.itemID}"
+												</a> <%--<a href="${contextRoot}/delete/inCategory/${city.itemCategoryID}/item/${city.itemID}"
 													class="btn btn-datatable btn-icon btn-transparent-dark">
 														<svg xmlns="http://www.w3.org/2000/svg" width="24"
 															height="24" viewBox="0 0 24 24" fill="none"
@@ -142,14 +153,24 @@
 																d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
 															<line x1="10" y1="11" x2="10" y2="17"></line>
 															<line x1="14" y1="11" x2="14" y2="17"></line></svg>
-												</a></td>
+												</a>--%>
+												<button class="btn btn-datatable btn-icon btn-transparent-dark" onClick="$(this).MessageBox(${city.itemCategoryID},${city.itemID},'item');" >
+												    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                    		height="24" viewBox="0 0 24 24" fill="none"
+                                                    		stroke="currentColor" stroke-width="2"
+                                                    	    stroke-linecap="round" stroke-linejoin="round"
+                                                    		class="feather feather-trash-2">
+                                                    		<polyline points="3 6 5 6 21 6"></polyline>
+                                                    		<path
+                                                                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                    		<line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    		<line x1="14" y1="11" x2="14" y2="17"></line></svg>
+												</button>
+												</td>
 											</tr>
 										</c:forEach>
 									</tbody>
 								</table>
-
-
-
 							</div>
 						</div>
 					</div>

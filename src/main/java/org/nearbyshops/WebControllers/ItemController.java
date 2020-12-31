@@ -6,7 +6,9 @@ import org.nearbyshops.DAOs.ItemCategoryDAO;
 import org.nearbyshops.DAOs.ItemDAO;
 import org.nearbyshops.DAOs.ItemDAOJoinOuter;
 import org.nearbyshops.Model.Item;
+import org.nearbyshops.Model.ItemCategory;
 import org.nearbyshops.Model.ModelRoles.User;
+import org.nearbyshops.Model.Shop;
 import org.nearbyshops.Utility.UserAuthentication;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +27,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class ItemController {
-
-
 
     @Autowired
     private HttpServletRequest request;
@@ -54,10 +55,8 @@ public class ItemController {
     private AppProperties appProperties;
 
     Logger logger = LoggerFactory.getLogger(CategoryController.class);
-    private static final Path BASE_DIR = Paths.get("./data/images/Item");
+    private static final java.nio.file.Path BASE_DIR = Paths.get("./data/images/Item");
     private static final double MAX_IMAGE_SIZE_MB = 2;
-
-
 
     @RequestMapping(value = "/editItem/{id}")
     public ModelAndView edit(@PathVariable int id) {
@@ -80,8 +79,6 @@ public class ItemController {
         //System.out.println(item.toString());
         return model;
     }
-
-
 
     @RequestMapping(value = "/updateItem", method = RequestMethod.POST)
     public ModelAndView editsave(@ModelAttribute("item") Item item, @RequestParam("file") MultipartFile file) {
@@ -188,8 +185,6 @@ public class ItemController {
         return model;
     }
 
-
-
     @RequestMapping(value = "/addItem/toCategory/{id}")
     public ModelAndView addItem(@PathVariable int id) {
 
@@ -214,8 +209,6 @@ public class ItemController {
 
         return model;
     }
-
-
 
     @RequestMapping(value = "/saveItem", method = RequestMethod.POST)
     public ModelAndView saveItem(@ModelAttribute("item") Item item, @RequestParam("file") MultipartFile file) {
@@ -315,8 +308,6 @@ public class ItemController {
 
         return model;
     }
-
-
 
 
     @RequestMapping(value = "/delete/inCategory/{categoryid}/item/{id}")

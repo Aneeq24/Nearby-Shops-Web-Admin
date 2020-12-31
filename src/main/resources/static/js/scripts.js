@@ -30,13 +30,37 @@
 		$("body").toggleClass("sidenav-toggled");
 	});
 
-	$alert = $('.alert');
-	if ($alert.length) {
-		setTimeout(function() {
-			$alert.fadeOut('slow');
-		}, 3000
-		);
-	}
+    $.fn.MessageBox = function(superId, ChildId, type) {
+        /*alert("Id -->"+id+"<br>Type -->"+type);*/
+        swal({
+          title: "Are you sure?",
+          text: "You will not be able to recover this!",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: false,
+          html: false
+        }, function(){
+          switch(type) {
+                                        case "item":
+                                          /*alert("deleting item -->(context url)"+);*/
+                                          window.location.href="/delete/inCategory/"+superId+"/item/"+ChildId;
+                                          break;
+                                        case "category":
+                                          window.location.href="/delete/inCategory/"+superId+"/category/"+ChildId;
+                                          break;
+                                        case "user":
+                                          window.location.href="delete/user/"+superId;
+                                          break;
+                                        default:
+                                          text = "Error";
+                                      }
+        });
+    }
+
+
+
 
 	// Activate Feather icons
 	feather.replace();
@@ -99,5 +123,29 @@
 		$('[data-target="#' + this.id + '"]').removeClass('collapsed');
 
 	})
+
+	/*changing image*/
+    	 function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgInp").change(function(){
+            readURL(this);
+        });
+
+        $alert = $('.alert');
+        	if ($alert.length) {
+        		setTimeout(function() {
+        			$alert.fadeOut('slow');
+        		}, 3000
+        		);
+        	}
+
 
 })(jQuery);

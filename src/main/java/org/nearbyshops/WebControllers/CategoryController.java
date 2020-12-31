@@ -3,6 +3,7 @@ package org.nearbyshops.WebControllers;
 import org.nearbyshops.AppProperties;
 import org.nearbyshops.Constants;
 import org.nearbyshops.DAOs.ItemCategoryDAO;
+import org.nearbyshops.DAOs.ItemDAO;
 import org.nearbyshops.DAOs.ItemDAOJoinOuter;
 import org.nearbyshops.Model.Item;
 import org.nearbyshops.Model.ItemCategory;
@@ -50,7 +51,7 @@ public class CategoryController {
     private AppProperties appProperties;
 
     Logger logger = LoggerFactory.getLogger(CategoryController.class);
-    private static final Path BASE_DIR = Paths.get("./data/images/ItemCategory");
+    private static final java.nio.file.Path BASE_DIR = Paths.get("./data/images/ItemCategory");
     private static final double MAX_IMAGE_SIZE_MB = 2;
 
     @RequestMapping("/getCategory/{id}")

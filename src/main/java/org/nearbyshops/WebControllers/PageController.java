@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
+
 @Controller
 public class PageController {
 
@@ -97,7 +98,7 @@ public class PageController {
 				session.setAttribute("token", userFetched.getToken());
 				model.addObject("name", userFetched.getName());
 
-				return new ModelAndView("redirect:/shops");
+				return new ModelAndView("redirect:/sales");
 
 			} else {
 
@@ -107,7 +108,7 @@ public class PageController {
 
 
 		} else {
-			return new ModelAndView("redirect:/shops");
+			return new ModelAndView("redirect:/sales");
 		}
 	}
 
