@@ -75,11 +75,16 @@ public class testController {
         return model;
     }
 
+
+
+
     @RequestMapping(value= "/test", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView showShops(HttpServletRequest request,
                                   @RequestParam(value="startDate", required=false) String startDate,
                                   @RequestParam(value="endDate", required=false) String endDate) throws ParseException {
+
+
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Date sdate = formatter.parse(startDate);
         Date edate = formatter.parse(endDate);

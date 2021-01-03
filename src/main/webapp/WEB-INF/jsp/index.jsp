@@ -64,7 +64,7 @@
 										<div class="form-group">
 											<label class="small mb-1" for="inputEmailAddress">Email</label>
 											<input class="form-control py-4" id="inputEmailAddress"
-												name="username" type="email"
+												name="username" type="text"
 												placeholder="Enter email address" />
 										</div>
 										<!-- Form Group (password)-->

@@ -57,6 +57,9 @@ public class SalesController {
 
 
 
+
+
+
     @RequestMapping(value= "/sales", method = RequestMethod.GET)
     @ResponseBody
     public ModelAndView showShops(HttpServletRequest request,
@@ -68,7 +71,8 @@ public class SalesController {
         java.sql.Date sDate = null;
         java.sql.Date eDate = null;
 
-        if(startDate!=null && endDate!=null)
+
+        if(startDate!=null && !startDate.equals("") && endDate!=null && !endDate.equals(""))
         {
             sDate =  new java.sql.Date(formatter.parse(startDate).getTime());
             eDate = new java.sql.Date(formatter.parse(endDate).getTime());
