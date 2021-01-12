@@ -23,11 +23,10 @@ Full installation guide available at https://developer.nearbyshops.org/installat
 
 About Nearby Shops
 --------------------
-Contains source code for Web Admin and Rest API of Nearby Shops app
+This is a Spring Boot project which contains an admin panel and REST API for the nearby shops app. 
+
 
 The installation guide and app customization guide is provided at http://developer.nearbyshops.org
-
-
 Website :  https://nearbyshops.org | Developers Guide: http://developer.nearbyshops.org
 
 
